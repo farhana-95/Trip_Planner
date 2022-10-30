@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 
-=======
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
->>>>>>> f193b94 (first commit)
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../models/loginuser.dart';
@@ -72,8 +69,6 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () async {
-<<<<<<< HEAD
-=======
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setBool('isLoggedin',true);
                 Navigator.push(
@@ -85,7 +80,6 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 );
 
->>>>>>> f193b94 (first commit)
                 dynamic result = await _auth.signInEmailPassword(LoginUser(email: _email.text,password: _password.text));
                 if (result.uid == null) { //null means unsuccessfull authentication
                   showDialog(
@@ -96,8 +90,6 @@ class _LoginFormState extends State<LoginForm> {
                         );
                       });
                 }
-<<<<<<< HEAD
-=======
                 else{
                   Navigator.push(
                     context,
@@ -108,7 +100,6 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 }
->>>>>>> f193b94 (first commit)
               },
               child: Text(
                 "Login".toUpperCase(),
