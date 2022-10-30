@@ -30,18 +30,11 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   provider: ^6.0.4
-<<<<<<< HEAD
-  firebase_core: ^1.24.0
-  firebase_auth: ^3.11.2
-  cloud_firestore: ^3.5.1
-  validators: ^3.0.0
-=======
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
   validators: ^3.0.0
   im_stepper: ^1.0.1+1
->>>>>>> f193b94 (first commit)
   flutter:
     sdk: flutter
 
@@ -50,12 +43,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_svg: ^1.1.5
-<<<<<<< HEAD
-=======
   flutter_local_notifications: ^12.0.3
   shared_preferences: ^2.0.15
 
->>>>>>> f193b94 (first commit)
 
 dev_dependencies:
   flutter_test:
@@ -86,10 +76,6 @@ flutter:
     - assets/images/welcome.jpg
     - assets/images/login.jpg
     - assets/images/registration.png
-<<<<<<< HEAD
-    - assets/icons/
-=======
->>>>>>> f193b94 (first commit)
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -19,11 +19,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   int currentIndex= 0;
-   List<Widget> pages = const [
-     Trip(),
-     NotificationAlert(),
-     profile(),
-   ];
+  List<Widget> pages = const [
+    Trip(),
+    NotificationAlert(),
+    profile(),
+  ];
   List<Widget> pageAppbar = const [
     TripAppbar(),
     NotificationAppbar(),
@@ -41,28 +41,28 @@ class _MainScreenState extends State<MainScreen> {
       body:pages[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        backgroundColor: kPrimaryLightColor,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.backpack, color: kPrimaryColor,),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_on,color: kPrimaryColor ),
-              label: ''),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,color: kPrimaryColor),
-            label: '',)
-        ],
+          currentIndex: currentIndex,
+          backgroundColor: kPrimaryLightColor,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.backpack, color: kPrimaryColor,),
+                label: ''),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications_on,color: kPrimaryColor ),
+                label: ''),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle,color: kPrimaryColor),
+              label: '',)
+          ],
 
-        onTap: (value) async{
-          final prefs = await SharedPreferences.getInstance();
-           prefs.setBool('isLoggedIn',false);
+          onTap: (value) async{
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setBool('isLoggedIn',false);
 
-          setState(() {
-          currentIndex =  value;
+            setState(() {
+              currentIndex =  value;
 
-        });}
+            });}
       ),
     );
 
