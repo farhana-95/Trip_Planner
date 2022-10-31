@@ -167,10 +167,13 @@ class _TripState extends State<Trip> {
                     return Card(
                       margin: const EdgeInsets.all(10),
                       child: ListTile(
-                        leading: Icon(Icons.travel_explore),
-                        title: Text("Trip: ${documentSnapshot['tripname']}\n"),
+                        leading: Image.asset("assets/images/baggage.png"),
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Trip: ${documentSnapshot['tripname']}"),
+                        ),
                         subtitle: Text("Location: ${documentSnapshot['location']} \n"
-                            "Starts: ${documentSnapshot['startdate']}\n"
+                            "\nStarts: ${documentSnapshot['startdate']}\n"
                             "Ends:  ${documentSnapshot['enddate']}"),
                         trailing: SizedBox(
                           width: 100,

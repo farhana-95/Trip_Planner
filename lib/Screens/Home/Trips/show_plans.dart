@@ -684,7 +684,7 @@ class _ShowPlansState extends State<ShowPlans> {
                         margin: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: ListTile(
-                            leading: Icon(Icons.emoji_people),
+                            leading: Image.asset("assets/images/lifestyle.png"),
                             title: Text("Activity: ${documentSnapshot['activitytitile']}\n"),
                             subtitle: Text("Details: ${documentSnapshot['activitynote']}\n"
                                       "\nDate: ${documentSnapshot['activitydate']} "
@@ -730,7 +730,7 @@ class _ShowPlansState extends State<ShowPlans> {
                         margin: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: ListTile(
-                            leading: Icon(Icons.commute),
+                            leading: Image.asset("assets/images/vehicles.png",height: 52,),
                             title: Text("Transport: ${documentSnapshot['transporttype']}\n"),
                             subtitle:
                                 Text("Date: ${documentSnapshot['transportdate']} "
@@ -777,7 +777,7 @@ class _ShowPlansState extends State<ShowPlans> {
                         margin: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: ListTile(
-                            leading: Icon(Icons.restaurant),
+                            leading:  Image.asset("assets/images/dish.png",height: 60,),
                             title: Text("Restaurant: ${documentSnapshot['restname']}\n"),
                             subtitle:
                                 Text("Address: ${documentSnapshot['resadd']}\n"
@@ -825,7 +825,7 @@ class _ShowPlansState extends State<ShowPlans> {
                         margin: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: ListTile(
-                            leading: Icon(Icons.hotel),
+                            leading:  Image.asset("assets/images/guesthouse.png"),
                             title: Text("Accommodation: ${documentSnapshot['acmtitle']}\n"),
                             subtitle:
                                 Text("Address: ${documentSnapshot['acmadd']}\n"
@@ -872,7 +872,7 @@ class _ShowPlansState extends State<ShowPlans> {
                         margin: const EdgeInsets.all(10),
                         child: GestureDetector(
                           child: ListTile(
-                            leading: Icon(Icons.event_note),
+                            leading: Image.asset("assets/images/note-book.png",height: 50,),
                             title: Text("Note: ${documentSnapshot['details']}\n"
                             ),
                             subtitle: Text("Date: ${documentSnapshot['date']} ""Time: ${documentSnapshot['time']}"),

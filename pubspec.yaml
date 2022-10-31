@@ -45,7 +45,7 @@ dependencies:
   flutter_svg: ^1.1.5
   flutter_local_notifications: ^12.0.3
   shared_preferences: ^2.0.15
-
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +76,16 @@ flutter:
     - assets/images/welcome.jpg
     - assets/images/login.jpg
     - assets/images/registration.png
+    - assets/images/logout.png
+    - assets/images/about.png
+    - assets/images/question.png
+    - assets/images/cogwheel.png
+    - assets/images/baggage.png
+    - assets/images/lifestyle.png
+    - assets/images/dish.png
+    - assets/images/note-book.png
+    - assets/images/vehicles.png
+    - assets/images/guesthouse.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

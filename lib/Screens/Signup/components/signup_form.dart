@@ -108,7 +108,8 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () async {
-              dynamic result = await _auth.registerEmailPassword(LoginUser(email: _email.text,password: _password.text));
+              dynamic result = await _auth.registerEmailPassword(
+                  LoginUser(email: _email.text,password: _password.text));
               result = await _auth.postDetailsToFirestore( _email.text,_name.text,_number.text);
               if (result.uid == null) { //null means unsuccessful authentication
                 showDialog(

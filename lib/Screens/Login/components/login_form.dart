@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
 import '../../../components/already_have_an_account_acheck.dart';
@@ -70,18 +69,8 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                prefs.setBool('isLoggedin',true);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
-                );
-
                 dynamic result = await _auth.signInEmailPassword(LoginUser(email: _email.text,password: _password.text));
+
                 if (result.uid == null) { //null means unsuccessfull authentication
                   showDialog(
                       context: context,
@@ -92,6 +81,8 @@ class _LoginFormState extends State<LoginForm> {
                       });
                 }
                 else{
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString('email', 'useremail@gmail.com');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -101,7 +92,8 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 }
-              },
+
+                },
               child: Text(
                 "Login".toUpperCase(),
               ),
