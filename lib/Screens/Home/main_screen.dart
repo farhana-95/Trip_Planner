@@ -4,7 +4,7 @@ import 'package:trip_planner/Screens/page_appbar.dart';
 import 'package:trip_planner/constants.dart';
 import 'Notifications/notifications.dart';
 import 'Profile/profile.dart';
-import 'Trips/trip.dart';
+import 'Trips/show_trip.dart';
 
 
 

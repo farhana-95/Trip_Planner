@@ -34,8 +34,8 @@ class AuthService {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: _login.email.toString(),
-          password: _login.password.toString());
+              email: _login.email.toString(),
+              password: _login.password.toString());
       User? user = userCredential.user;
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
@@ -48,8 +48,8 @@ class AuthService {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-          email: _login.email.toString(),
-          password: _login.password.toString());
+              email: _login.email.toString(),
+              password: _login.password.toString());
       User? user = userCredential.user;
       return _firebaseUser(user);
     } on FirebaseAuthException catch (e) {
@@ -59,29 +59,28 @@ class AuthService {
     }
   }
 
+  postDetailsToFirestore(String email, String name, String number) async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
 
-postDetailsToFirestore(String email,String name,String number) async {
-  // calling our firestore
-  // calling our user model
-  // sedning these values
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
 
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
 
-  UserModel userModel = UserModel();
+    // writing all the values
+    userModel.email = email;
+    userModel.name = name;
+    userModel.number = number;
 
-  // writing all the values
-  userModel.email = email;
-  userModel.name= name;
-  userModel.number = number;
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .set(userModel.toMap());
 
-  await firebaseFirestore
-      .collection("users")
-      .doc(user?.uid)
-      .set(userModel.toMap());
-
-  return "success!";
-}
+    return "success!";
+  }
 
 //sign out
   Future signOut() async {

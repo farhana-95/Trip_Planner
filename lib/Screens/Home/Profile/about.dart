@@ -7,7 +7,68 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:Text('About'),backgroundColor: kPrimaryColor,),
+      appBar: AppBar(title:const Text('About'),backgroundColor: kPrimaryColor,),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            height: 80,
+            width: 100,
+            child: GestureDetector(
+              child: Card(
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  // leading: Image.asset(
+                  //   "assets/images/about.png",
+                  //   height: 40,
+                  // ),
+                  title: Text('About Trip Planner'),
+                ),
+              ),
+              onTap: () {
+              },
+            ),
+          ),
+          Container(
+            height: 80,
+            width: 100,
+            child: GestureDetector(
+              child: Card(
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  // leading: Image.asset(
+                  //   "assets/images/about.png",
+                  //   height: 40,
+                  // ),
+                  title: Text('Privacy & Cookies'),
+                ),
+              ),
+              onTap: () {
+
+              },
+            ),
+          ),
+          Container(
+            height: 80,
+            width: 100,
+            child: GestureDetector(
+              child: Card(
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  // leading: Image.asset(
+                  //   "assets/images/about.png",
+                  //   height: 40,
+                  // ),
+                  title: Text('Terms of Use'),
+                ),
+              ),
+              onTap: () {
+
+              },
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 }

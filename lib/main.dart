@@ -16,7 +16,6 @@ void main() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
 
- // print(email);
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -33,7 +32,7 @@ void main() async{
       ),
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
-        fillColor: kPrimaryLightColor,
+        //fillColor: kPrimaryLightColor,
         iconColor: kPrimaryColor,
         prefixIconColor: kPrimaryColor,
         contentPadding: EdgeInsets.symmetric(
@@ -42,7 +41,8 @@ void main() async{
           borderRadius: BorderRadius.all(Radius.circular(30)),
           borderSide: BorderSide.none,
         ),
-      )),
+      )
+      ),
       home: email == null ? WelcomeScreen() : MainScreen()));
 }
 

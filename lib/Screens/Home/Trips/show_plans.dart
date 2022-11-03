@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Home/Trips/plan_details.dart';
+import 'package:trip_planner/Screens/Home/Trips/addplan_details.dart';
 import '../../../constants.dart';
 import 'package:intl/intl.dart';
 
@@ -651,7 +651,6 @@ class _ShowPlansState extends State<ShowPlans> {
   }
   @override
   void initState() {
-
     tripId = widget.tripid;
     _activityplan = FirebaseFirestore.instance.collection("$tripId").doc("activityplan").collection("$tripId");
     _transport = FirebaseFirestore.instance.collection("$tripId").doc("transport").collection("$tripId");
