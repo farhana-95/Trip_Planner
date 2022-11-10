@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../../constants.dart';
+import 'package:trip_planner/Screens/Home/Profile/Help/get_help.dart';
+import '../../../../constants.dart';
 
 class Help extends StatefulWidget {
   const Help({Key? key}) : super(key: key);
@@ -15,14 +16,14 @@ class _HelpState extends State<Help> {
   FirebaseFirestore.instance.collection('help');
   final _helpQuestions=TextEditingController();
 
-  Widget askhelp(){
+  Widget Report(){
     return Container(
       height: 230.0,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
       child: Column(
         children: <Widget>[
-          Text("Ask Question",
+          Text("Report",
             style: TextStyle(fontSize: 20.0),
           ),
           SizedBox(height: 20,),
@@ -38,7 +39,7 @@ class _HelpState extends State<Help> {
                 fontSize: 17,
                 color: Colors.black,
               ),
-              hintText: 'Question',
+              hintText: 'Question/Problem',
             ),
             onSaved: (questions){},
           ),
@@ -80,7 +81,10 @@ class _HelpState extends State<Help> {
                 leading: Icon(Icons.question_mark),
                 title: Text('How do I add new Trips/ Tours?'),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => GetHelp()));
+              },
             ),
           ),
           Container(
@@ -92,7 +96,10 @@ class _HelpState extends State<Help> {
                 leading: Icon(Icons.question_mark),
                 title: Text('How to add tour plans?'),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => GetHelp()));
+              },
             ),
           ),
           Container(
@@ -104,7 +111,10 @@ class _HelpState extends State<Help> {
                 leading: Icon(Icons.question_mark),
                 title: Text('Why the profile picture is not uploading?'),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => GetHelp()));
+              },
             ),
           ),
           Container(
@@ -114,7 +124,7 @@ class _HelpState extends State<Help> {
               child: ListTile(
                 textColor: Colors.blue,
                 contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                title: Text('Having an issue?\nLet us know more...'),
+                title: Text('Having an issue?\nReport a problem here..'),
               ),
               onTap: () {
                 showModalBottomSheet(
@@ -126,7 +136,7 @@ class _HelpState extends State<Help> {
                           left: 18,
                           right: 18,
                           bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-                      child: askhelp(),
+                      child: Report(),
                     );}
                 );
               },
@@ -137,71 +147,3 @@ class _HelpState extends State<Help> {
     );
   }
 }
-
-
-// class Help extends StatelessWidget {
-//   const Help({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Get Help'),
-//         backgroundColor: kPrimaryColor,
-//       ),
-//       body: ListView(
-//         children: <Widget>[
-//           SizedBox(height: 20,),
-//           Container(
-//             height: 60,
-//             width: 100,
-//             child: GestureDetector(
-//               child: ListTile(
-//                 textColor: Colors.blue,
-//                 leading: Icon(Icons.question_mark),
-//                 title: Text('How do I add new Trips/ Tours?'),
-//               ),
-//               onTap: () {},
-//             ),
-//           ),
-//           Container(
-//             height: 60,
-//             width: 100,
-//             child: GestureDetector(
-//               child: ListTile(
-//                 textColor: Colors.blue,
-//                 leading: Icon(Icons.question_mark),
-//                 title: Text('How to add tour plans?'),
-//               ),
-//               onTap: () {},
-//             ),
-//           ),
-//           Container(
-//             height: 60,
-//             width: 100,
-//             child: GestureDetector(
-//               child: ListTile(
-//                 textColor: Colors.blue,
-//                 leading: Icon(Icons.question_mark),
-//                 title: Text('Why the profile picture is not uploading?'),
-//               ),
-//               onTap: () {},
-//             ),
-//           ),
-//           Container(
-//             height: 80,
-//             width: 100,
-//             child: GestureDetector(
-//               child: ListTile(
-//                 textColor: Colors.blue,
-//                 contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-//                 title: Text('Having an issue?\nLet us know more...'),
-//               ),
-//               onTap: () {},
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

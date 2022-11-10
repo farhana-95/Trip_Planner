@@ -80,7 +80,7 @@ class _UserImageState extends State<UserImage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextButton.icon(
+              /*TextButton.icon(
                 onPressed: () {},
                 icon: Icon(
                   Icons.camera_alt_outlined,
@@ -89,7 +89,7 @@ class _UserImageState extends State<UserImage> {
               ),
               SizedBox(
                 width: 55,
-              ),
+              ),*/
               TextButton.icon(
                 onPressed: () {
                   pickImage();

@@ -48,7 +48,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   final time = TextEditingController();
   final date = TextEditingController();
   List<Step> stepList() => [
-    Step(title: Text('Activity'),
+    Step(title: Text('Activities'),
         content: Container(
           child: Column(
             children: <Widget>[
@@ -244,7 +244,7 @@ class _PlanDetailsState extends State<PlanDetails> {
           ),
         ),
     ),
-    Step(title: Text('Accommodation'),
+    Step(title: Text('Accomodation'),
         content: Container(
           child: Column(
             children: [
@@ -317,6 +317,7 @@ class _PlanDetailsState extends State<PlanDetails> {
         ),
     ),
     Step(title: Text('Add Notes'),
+
         content: Container(
           child: Column(
             children: [
@@ -387,6 +388,7 @@ class _PlanDetailsState extends State<PlanDetails> {
         Column(
           children: <Widget>[
             Expanded(child: Stepper(
+
               currentStep: _activeCurrentStep,
               steps:stepList(),
              onStepContinue: () {
@@ -498,7 +500,9 @@ class _PlanDetailsState extends State<PlanDetails> {
               },
               // onStepTap allows to directly click on the particular step we want
               onStepTapped: (int index) {
+
                 setState(() {
+                  const Color(0xFF399BB4);
                   _activeCurrentStep = index;
                 });
               },

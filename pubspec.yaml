@@ -34,7 +34,6 @@ dependencies:
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
   validators: ^3.0.0
-  im_stepper: ^1.0.1+1
   flutter:
     sdk: flutter
 
@@ -47,6 +46,9 @@ dependencies:
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
   firebase_storage: ^11.0.3
+  intl: ^0.17.0
+  syncfusion_flutter_calendar: ^20.3.56
+  flutter_clean_calendar: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +90,9 @@ flutter:
     - assets/images/vehicles.png
     - assets/images/guesthouse.png
     - assets/images/user.png
+    - assets/images/history.png
+    - assets/images/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

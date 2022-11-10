@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trip_planner/Screens/Home/Profile/about.dart';
-import 'package:trip_planner/Screens/Home/Profile/help.dart';
-import 'package:trip_planner/Screens/Home/Profile/personal_informations.dart';
-import 'package:trip_planner/Screens/Home/Profile/setting.dart';
-import 'package:trip_planner/Screens/Home/Profile/user_image.dart';
+import 'package:trip_planner/Screens/Home/Profile/About/about.dart';
+import 'package:trip_planner/Screens/Home/Profile/Help/help.dart';
+import 'package:trip_planner/Screens/Home/Profile/Personal_Info/personal_informations.dart';
+import 'package:trip_planner/Screens/Home/Profile/Settings/setting.dart';
+import 'package:trip_planner/Screens/Home/Profile/Personal_Info/user_image.dart';
+import 'package:trip_planner/Screens/Home/Trips/trip_history.dart';
 import 'package:trip_planner/Screens/Welcome/welcome_screen.dart';
 
 class profile extends StatefulWidget {
@@ -27,26 +28,6 @@ class _profileState extends State<profile> {
               margin: EdgeInsets.all(10),
               child: Center(
                 child: UserImage(),
-                /*Stack(
-                children: <Widget>[
-                  CircleAvatar(
-                  backgroundColor: Colors.blueAccent,
-                  backgroundImage: image != null? FileImage(File(image!.path)): null,
-                  radius: 60,
-                ),
-                  Positioned(
-                    bottom: 20.0,
-                    right: 20.0,
-                    child: InkWell(
-                        child: Icon(Icons.camera_alt),
-                      onTap: (){
-                          showModalBottomSheet(context: context,
-                              builder: ((builder)=> bottomSheet()));
-                      },
-                    ),
-                  )
-                ]
-              )*/
               ),
             ),
           ),
@@ -72,6 +53,26 @@ class _profileState extends State<profile> {
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => PersonalInfo()));
+              },
+            ),
+          ),
+          Container(
+            height: 80,
+            width: 100,
+            child: GestureDetector(
+              child: Card(
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                    leading: Image.asset(
+                      "assets/images/history.png",
+                      height: 36,
+                    ),
+                    title: Text('History')),
+                elevation: 3,
+              ),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => TripHistory()));
               },
             ),
           ),

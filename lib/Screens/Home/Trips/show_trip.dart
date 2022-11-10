@@ -165,50 +165,70 @@ class _TripState extends State<Trip> {
                     itemBuilder: (context, index) {
                       final DocumentSnapshot documentSnapshot =
                           streamSnapshot.data!.docs[index];
-                      return Card(
-                        margin: const EdgeInsets.all(10),
-                        child: ListTile(
-                          leading: Image.asset("assets/images/baggage.png"),
-                          title: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Trip: ${documentSnapshot['tripname']}"),
-                          ),
-                          subtitle: Text(
-                              "Location: ${documentSnapshot['location']} \n"
-                              "\nStarts: ${documentSnapshot['startdate']}\n"
-                              "Ends:  ${documentSnapshot['enddate']}"),
-                          trailing: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () => _update(documentSnapshot),
-                                  icon: Icon(
-                                    Icons.edit,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    //Navigator.pop(context);
-                                    setState(() {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => ShowPlans(
-                                                  tripid: documentSnapshot[
-                                                      'tripid'])));
-                                    });
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios,
-                                  ),
-                                ),
+                      //DateTime dt1 = DateTime.parse(documentSnapshot['enddate']);
+                      DateTime dt2 =DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
+                      //var t=DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
+                      if(dt2.isAfter(new DateTime.now())){
+                        return Card(
+                          margin: const EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: Image.asset("assets/images/baggage.png"),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Trip: ${documentSnapshot['tripname']}",
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                                SizedBox(height: 7,),
+                                Text("Location: ${documentSnapshot['location']} "),
+                                SizedBox(height: 10,)
                               ],
                             ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                        "Starts: ${documentSnapshot['startdate']}"
+                                        ,
+                                style: TextStyle(fontSize: 15.5),),
+                                SizedBox(height: 7,),
+                                Text("Ends:  ${documentSnapshot['enddate']}",style: TextStyle(fontSize: 15.5),),
+                              ],
+                            ),
+                            trailing: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () => _update(documentSnapshot),
+                                    icon: Icon(
+                                      Icons.edit,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      //Navigator.pop(context);
+                                      setState(() {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) => ShowPlans(
+                                                    tripid: documentSnapshot[
+                                                    'tripid'])));
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                        elevation: 3,
-                      );
+                          elevation: 3,
+                        );
+                        //print(documentSnapshot['tripname']);
+                      }
+                      return const SizedBox();
                     },
                   );
                 }

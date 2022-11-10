@@ -1,12 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_planner/Screens/Home/Notifications/notification_service.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
 import 'package:trip_planner/Screens/Login/components/login_form.dart';
 import 'package:trip_planner/Screens/Login/login_screen.dart';
-
 import 'package:trip_planner/constants.dart';
-
 import 'Screens/Welcome/welcome_screen.dart';
 
 
@@ -15,6 +14,8 @@ void main() async{
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
+  NotificationService().init();
+
 
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,

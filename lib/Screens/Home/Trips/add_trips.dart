@@ -138,13 +138,15 @@ class _AddTripsState extends State<AddTrips> {
               onPressed: ()async{
                 if(_tripname.text!= '' || _location.text!=''||
                     _startdate.text!='' || _enddate.text!='')
-                  {Map<String,dynamic> data={
+                  {
+                    Map<String,dynamic> data={
                   "tripid": Timestamp.now().millisecondsSinceEpoch,
                   "tripname": _tripname.text,
                   "location": _location.text,
                   "startdate":_startdate.text,
                   "enddate": _enddate.text};
-                _trip.add(data);}
+                _trip.add(data);
+                  }
 
                 Navigator.push(
                   context,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/Profile/About/privacy_cookies.dart';
+import 'package:trip_planner/Screens/Home/Profile/About/terms_of_use.dart';
 import 'package:trip_planner/constants.dart';
 
 class About extends StatelessWidget {
@@ -21,29 +23,12 @@ class About extends StatelessWidget {
                   //   "assets/images/about.png",
                   //   height: 40,
                   // ),
-                  title: Text('About Trip Planner'),
+                  title: Text('Privacy Policy'),
                 ),
               ),
               onTap: () {
-              },
-            ),
-          ),
-          Container(
-            height: 80,
-            width: 100,
-            child: GestureDetector(
-              child: Card(
-                margin: EdgeInsets.all(10),
-                child: ListTile(
-                  // leading: Image.asset(
-                  //   "assets/images/about.png",
-                  //   height: 40,
-                  // ),
-                  title: Text('Privacy & Cookies'),
-                ),
-              ),
-              onTap: () {
-
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => PrivacyPolicy()));
               },
             ),
           ),
@@ -62,7 +47,8 @@ class About extends StatelessWidget {
                 ),
               ),
               onTap: () {
-
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => TermsOfUse()));
               },
             ),
           ),

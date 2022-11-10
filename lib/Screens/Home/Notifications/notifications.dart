@@ -1,31 +1,59 @@
-
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:trip_planner/Screens/Home/Notifications/notifications.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
+import 'package:trip_planner/Screens/Calender/calendar.dart';
+import 'package:trip_planner/Screens/Home/Notifications/notification_service.dart';
 class NotificationAlert extends StatefulWidget {
   const NotificationAlert({Key? key}) : super(key: key);
-
   @override
   State<NotificationAlert> createState() => _NotificationAlertState();
 }
 
 class _NotificationAlertState extends State<NotificationAlert> {
-  PageController controller=PageController();
+  NotificationService _notificationService = NotificationService();
+
     @override
     Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-      children:[
-       Container(color: Colors.orangeAccent,),
-        Container(color: Colors.brown,),
-        Container(color: Colors.purple,),
-        ]
-    ),
-      );
+       body:
+       // Calendar(),
+       // NewPlan(),
+       Column(
+         crossAxisAlignment: CrossAxisAlignment.center,
+         children: [
+           ElevatedButton(
+             child: Text('Show Notification'),
+             //padding: const EdgeInsets.all(10),
+             onPressed: () async {
+               await _notificationService.showNotifications();
+             },
+           ),
+           SizedBox(height: 3),
+           ElevatedButton(
+             child: Text('Schedule Notification'),
+             // padding: const EdgeInsets.all(10),
+             onPressed: () async {
+               await _notificationService.scheduleNotifications();
+             },
+           ),
+           SizedBox(height: 3),
+           ElevatedButton(
+             child: Text('Cancel Notification'),
+             //padding: const EdgeInsets.all(10),
+             onPressed: () async {
+               await _notificationService.cancelNotifications(0);
+             },
+           ),
+           SizedBox(height: 3),
+           ElevatedButton(
+             child: Text('Cancel All Notifications'),
+             //padding: const EdgeInsets.all(10),
+             onPressed: () async {
+               await _notificationService.cancelAllNotifications();
+             },
+           ),
+           SizedBox(height: 3),
+         ],
+       ),
+    );
   }
 }
+
