@@ -13,7 +13,7 @@ class NotificationAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Notifications");
+    return Text("Reminder");
   }
 }
 class ProfileAppbar extends StatelessWidget {

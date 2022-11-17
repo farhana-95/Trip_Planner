@@ -1,11 +1,16 @@
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_planner/Screens/Home/Notifications/Model/NotifiacationAdopter.dart';
 import 'package:trip_planner/Screens/Home/Notifications/notification_service.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
-import 'package:trip_planner/Screens/Login/components/login_form.dart';
-import 'package:trip_planner/Screens/Login/login_screen.dart';
 import 'package:trip_planner/constants.dart';
+import 'package:workmanager/workmanager.dart';
+
 import 'Screens/Welcome/welcome_screen.dart';
 
 
@@ -15,7 +20,11 @@ void main() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
   NotificationService().init();
+  await Hive.initFlutter();
+  Hive.registerAdapter(NotificationAdopter());
+  await Hive.openBox('TripBox');
 
+  await AndroidAlarmManager.initialize();
 
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,

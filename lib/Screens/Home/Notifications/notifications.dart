@@ -1,6 +1,12 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Calender/calendar.dart';
+import 'package:hive/hive.dart';
 import 'package:trip_planner/Screens/Home/Notifications/notification_service.dart';
+import 'package:trip_planner/constants.dart';
+
+import 'LocalDB/Localdb.dart';
+import 'Model/NotificationListModel.dart';
+import 'alarm_manager/alarm_manager.dart';
 class NotificationAlert extends StatefulWidget {
   const NotificationAlert({Key? key}) : super(key: key);
   @override
@@ -8,52 +14,80 @@ class NotificationAlert extends StatefulWidget {
 }
 
 class _NotificationAlertState extends State<NotificationAlert> {
-  NotificationService _notificationService = NotificationService();
+  // NotificationService _notificationService = NotificationService();
+  List<NotificationListModel> _someAsyncData = [];
+  Localdb localDb =  Localdb();
+  SetAlarm alarm =  SetAlarm();
+  var box =  Hive.openBox<NotificationListModel>('TripBox1');
 
+  @override
+  void initState() {
+    super.initState();
+    localDb.getLocalData().then((val) {
+      setState(() {
+        if(val!= null){
+          _someAsyncData = val;
+
+        }
+      });
+    });
+  }
+
+  void deleteTrip(int index)  async {
+
+    var box = await Hive.openBox<NotificationListModel>('TripBox1');
+    // var _taskBox =  await Hive.openBox<Task>('taskbox');
+
+    print(index);
+
+    box.deleteAt(index);
+
+    // notifyListeners();
+  }
     @override
     Widget build(BuildContext context) {
     return Scaffold(
        body:
-       // Calendar(),
-       // NewPlan(),
-       Column(
-         crossAxisAlignment: CrossAxisAlignment.center,
-         children: [
-           ElevatedButton(
-             child: Text('Show Notification'),
-             //padding: const EdgeInsets.all(10),
-             onPressed: () async {
-               await _notificationService.showNotifications();
-             },
-           ),
-           SizedBox(height: 3),
-           ElevatedButton(
-             child: Text('Schedule Notification'),
-             // padding: const EdgeInsets.all(10),
-             onPressed: () async {
-               await _notificationService.scheduleNotifications();
-             },
-           ),
-           SizedBox(height: 3),
-           ElevatedButton(
-             child: Text('Cancel Notification'),
-             //padding: const EdgeInsets.all(10),
-             onPressed: () async {
-               await _notificationService.cancelNotifications(0);
-             },
-           ),
-           SizedBox(height: 3),
-           ElevatedButton(
-             child: Text('Cancel All Notifications'),
-             //padding: const EdgeInsets.all(10),
-             onPressed: () async {
-               await _notificationService.cancelAllNotifications();
-             },
-           ),
-           SizedBox(height: 3),
-         ],
-       ),
+       ListView.builder(itemCount: _someAsyncData.length,
+           itemBuilder: (BuildContext context, int i) {
+             return Card(
+               child:
+               Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   const SizedBox(height: 7,),
+                   Container(height: 60,
+                     child: Text(" Trip '${_someAsyncData[i].tripname}' from '${_someAsyncData[i].startdate}' has been saved for reminder. "
+                         ,style: TextStyle(fontSize: 16,height: 1.6),),),
+                   Padding(
+                     padding: const EdgeInsets.only(left: 215,right: 10),
+                     child: TextButton(
+                         child: Row(
+                         children: [
+                           Text("Cancel Reminder",style: TextStyle(color: Colors.black54),),
+                           Icon(Icons.notifications_off_outlined,color:Colors.black54 ,)
+                       ],
+                     ),
+                       onPressed: () async {
+                         alarm.cancelAlarm();
+
+                      setState(() {
+                        deleteTrip(i);
+
+                        // _someAsyncData[i].delete();
+
+                      });
+                       },
+                     ),
+                   )
+                 ],
+               ),
+             );
+           }
+       )
+       //SetAlarm()
     );
   }
+
 }
 

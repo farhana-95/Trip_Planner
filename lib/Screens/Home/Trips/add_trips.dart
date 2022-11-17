@@ -16,6 +16,7 @@ class _AddTripsState extends State<AddTrips> {
   final _startdate=TextEditingController();
   final _enddate=TextEditingController();
   final _tripname=TextEditingController();
+  final _triptime=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +27,9 @@ class _AddTripsState extends State<AddTrips> {
         backgroundColor: kPrimaryColor,
         title: Text('Add Trips'),
       ),
-      body: Column(
-        children:<Widget> [
-          Expanded(
-            child:
+      body: SingleChildScrollView(
+        child: Column(
+          children:<Widget> [
             Column(children:[
               SizedBox(height: 20,width: 20,),
               Padding(
@@ -126,40 +126,65 @@ class _AddTripsState extends State<AddTrips> {
                   },
                 ),
               ),
-           ]
-            ),
-          ),
-          MaterialButton(
-              color: kPrimaryColor,
-              child: Text('Save',
-                style: TextStyle(color: Colors.white),
-
-              ),
-              onPressed: ()async{
-                if(_tripname.text!= '' || _location.text!=''||
-                    _startdate.text!='' || _enddate.text!='')
-                  {
-                    Map<String,dynamic> data={
-                  "tripid": Timestamp.now().millisecondsSinceEpoch,
-                  "tripname": _tripname.text,
-                  "location": _location.text,
-                  "startdate":_startdate.text,
-                  "enddate": _enddate.text};
-                _trip.add(data);
-                  }
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                TextField(
+                  controller: _triptime,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Set Time for Reminder ',
+                      labelStyle: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black,
+                      ),
+                      hintText: 'Enter Time'
                   ),
-                );
-              }
-          )
-        ],
+                  onTap: ()async{
+                    TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+                    if(tpm != null)
+                    {
+                      setState(() {
+                        _triptime.text= tpm.format(context);
+                      });
+                    }
+                  },
+                ),
+              ),
+             ]
+            ),
+            MaterialButton(
+                color: kPrimaryColor,
+                child: Text('Save',
+                  style: TextStyle(color: Colors.white),
 
+                ),
+                onPressed: ()async{
+
+                      Map<String,dynamic> data={
+                    "tripid": Timestamp.now().millisecondsSinceEpoch,
+                    "tripname": _tripname.text,
+                    "location": _location.text,
+                    "startdate":_startdate.text,
+                    "enddate": _enddate.text,
+                      "reminder": _triptime.text};
+                  _trip.add(data);
+
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return MainScreen();
+                      },
+                    ),
+                  );
+                }
+            )
+          ],
+
+        ),
       ),
     );
   }
