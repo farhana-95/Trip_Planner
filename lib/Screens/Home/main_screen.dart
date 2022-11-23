@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/place_list.dart';
 import 'package:trip_planner/Screens/page_appbar.dart';
 import 'package:trip_planner/constants.dart';
 import 'Notifications/notifications.dart';
@@ -21,11 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex= 0;
   List<Widget> pages = const [
     Trip(),
+    PlaceList(),
     NotificationAlert(),
     profile(),
   ];
   List<Widget> pageAppbar = const [
     TripAppbar(),
+    SuggestionAppBar(),
     NotificationAppbar(),
     ProfileAppbar(),
   ];
@@ -46,6 +49,9 @@ class _MainScreenState extends State<MainScreen> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.backpack, color: kPrimaryColor,),
+                label: ''),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.search,color: kPrimaryColor ),
                 label: ''),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications_on,color: kPrimaryColor ),

@@ -5,7 +5,9 @@ import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 
 class AddTrips extends StatefulWidget {
-   const AddTrips( {Key? key}) : super(key: key);
+  final String name,area;
+   const AddTrips( {Key? key,
+     required this.name,required this.area}) : super(key: key);
   @override
   State<AddTrips> createState() => _AddTripsState();
 }
@@ -16,8 +18,6 @@ class _AddTripsState extends State<AddTrips> {
   final _startdate=TextEditingController();
   final _enddate=TextEditingController();
   final _tripname=TextEditingController();
-  final _triptime=TextEditingController();
-
   @override
   Widget build(BuildContext context) {
 
@@ -47,7 +47,8 @@ class _AddTripsState extends State<AddTrips> {
                     ),
                 hintText: 'Enter Name',
                   ),
-                  onSaved: (tripname){},
+                  onSaved: (tripname){
+                  },
                 ),
               ),
               Padding(
@@ -76,22 +77,23 @@ class _AddTripsState extends State<AddTrips> {
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Start Date ',
+                    labelText: 'Start Date & Time',
                     labelStyle: TextStyle(
                       fontSize: 17,
                       color: Colors.black,
                     ),
-                    hintText: 'Enter Date',
+                    hintText: 'Enter Date & Time',
                   ),
                   onTap: ()async{
                     DateTime? pickeddate = await showDatePicker(context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2101));
-                    if(pickeddate != null)
+                    TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+                    if(pickeddate != null && tpm != null)
                       {
                         setState(() {
-                          _startdate.text= DateFormat('dd-MM-yyyy').format(pickeddate);
+                          _startdate.text= DateFormat('dd-MM-yyyy').format(pickeddate) + " ${tpm.format(context)}";
                         });
                       }
                   },
@@ -126,32 +128,6 @@ class _AddTripsState extends State<AddTrips> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                TextField(
-                  controller: _triptime,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Set Time for Reminder ',
-                      labelStyle: TextStyle(
-                        fontSize: 17,
-                        color: Colors.black,
-                      ),
-                      hintText: 'Enter Time'
-                  ),
-                  onTap: ()async{
-                    TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-                    if(tpm != null)
-                    {
-                      setState(() {
-                        _triptime.text= tpm.format(context);
-                      });
-                    }
-                  },
-                ),
-              ),
              ]
             ),
             MaterialButton(
@@ -168,8 +144,13 @@ class _AddTripsState extends State<AddTrips> {
                     "location": _location.text,
                     "startdate":_startdate.text,
                     "enddate": _enddate.text,
-                      "reminder": _triptime.text};
+                     };
                   _trip.add(data);
+                      _tripname.text='';
+                      _location.text='';
+                      _startdate.text='';
+                      _enddate.text='';
+
 
 
                   Navigator.push(
@@ -180,6 +161,10 @@ class _AddTripsState extends State<AddTrips> {
                       },
                     ),
                   );
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
+                      Navigator.of(context).pop();
+
                 }
             )
           ],

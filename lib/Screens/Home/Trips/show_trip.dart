@@ -83,10 +83,12 @@ class _TripState extends State<Trip> {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2101));
-                      if (pickeddate != null) {
+                      TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+                      if (pickeddate != null && tpm != null) {
                         setState(() {
                           _startdate.text =
-                              DateFormat('dd-MM-yyyy').format(pickeddate);
+                              DateFormat('dd-MM-yyyy').format(pickeddate)+ " ${tpm.format(context)}";
                         });
                       }
                     },
@@ -159,6 +161,10 @@ class _TripState extends State<Trip> {
                       _startdate.text = '';
                       _enddate.text = '';
                       _triptime.text='';
+
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text("Updated")));
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -172,6 +178,9 @@ class _TripState extends State<Trip> {
                          _location.text, _startdate.text, _triptime.text, _enddate.text, true);
                       // AndroidAlarmManager.periodic(const Duration(minutes: 1), 1, printHello);
                      alarm.scheduleOneShotAlarm(_startdate.text, true);
+                     ScaffoldMessenger.of(context)
+                         .showSnackBar(const SnackBar(content: Text("Reminder Saved!")));
+                     Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -313,10 +322,9 @@ class _TripState extends State<Trip> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
-        tooltip: 'Increment',
         onPressed: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AddTrips()));
+              .push(MaterialPageRoute(builder: (context) => AddTrips(name: '', area: '',)));
         },
         child: const Icon(Icons.add),
       ),

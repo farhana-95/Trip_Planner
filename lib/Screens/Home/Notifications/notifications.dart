@@ -32,18 +32,25 @@ class _NotificationAlertState extends State<NotificationAlert> {
       });
     });
   }
-
   void deleteTrip(int index)  async {
 
     var box = await Hive.openBox<NotificationListModel>('TripBox1');
     // var _taskBox =  await Hive.openBox<Task>('taskbox');
+    if(box.isNotEmpty) {
+      //final  data = box.values;
+      List<NotificationListModel> hiveVitals = box.values.toList();
+      //print( "hiveData  ${hiveVitals.first.tripname}");
+      hiveVitals.removeAt(index);
+//      box.clear();
+      box.deleteAt(index);
 
-    print(index);
+      _someAsyncData = hiveVitals;
 
-    box.deleteAt(index);
-
-    // notifyListeners();
+    }else{
+      _someAsyncData = [];
+    }
   }
+
     @override
     Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +63,12 @@ class _NotificationAlertState extends State<NotificationAlert> {
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    const SizedBox(height: 7,),
-                   Container(height: 60,
-                     child: Text(" Trip '${_someAsyncData[i].tripname}' from '${_someAsyncData[i].startdate}' has been saved for reminder. "
-                         ,style: TextStyle(fontSize: 16,height: 1.6),),),
+                   Container(height: 70,
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 20,right: 15,top: 10),
+                       child: Text(" Trip '${_someAsyncData[i].tripname}' from '${_someAsyncData[i].startdate}' has been saved for reminder. "
+                           ,style: TextStyle(fontSize: 16,height: 1.6),),
+                     ),),
                    Padding(
                      padding: const EdgeInsets.only(left: 215,right: 10),
                      child: TextButton(
@@ -73,9 +83,9 @@ class _NotificationAlertState extends State<NotificationAlert> {
 
                       setState(() {
                         deleteTrip(i);
-
-                        // _someAsyncData[i].delete();
-
+                       // _someAsyncData[i].delete();
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(content: Text("Reminder Deleted")));
                       });
                        },
                      ),

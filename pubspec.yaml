@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^2.1.1
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
+  firebase_storage: ^11.0.3
   validators: ^3.0.0
   flutter:
     sdk: flutter
@@ -46,12 +47,11 @@ dependencies:
   path_provider: ^2.0.11
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.0
-  flutter_local_notifications: ^12.0.3
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
-  firebase_storage: ^11.0.3
   intl: ^0.17.0
   android_alarm_manager_plus: ^2.1.0
+  flutter_local_notifications: ^12.0.3
   workmanager: ^0.5.1
   build_runner: ^2.3.2
 

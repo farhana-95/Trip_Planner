@@ -24,4 +24,13 @@ class ProfileAppbar extends StatelessWidget {
     return Text("Profile");
   }
 }
+class SuggestionAppBar extends StatelessWidget {
+  const SuggestionAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("Places");
+  }
+}
+
 
