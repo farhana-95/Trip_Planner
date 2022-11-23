@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/Trips/show_trip.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
 import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,19 @@ class _AddTripsState extends State<AddTrips> {
   final _startdate=TextEditingController();
   final _enddate=TextEditingController();
   final _tripname=TextEditingController();
+
+
+  @override
+  void initState() {
+    _tripname.clear();
+    _location.clear();
+    _tripname.text = widget.name;
+    _location.text = widget.area;
+    // TODO: implement initState
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -129,43 +143,37 @@ class _AddTripsState extends State<AddTrips> {
                 ),
               ),
              ]
-            ),
-            MaterialButton(
-                color: kPrimaryColor,
-                child: Text('Save',
-                  style: TextStyle(color: Colors.white),
+            ),SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 120),
+              child: ElevatedButton(
 
-                ),
-                onPressed: ()async{
+                  child: Text('Save',
+                    style: TextStyle(color: Colors.white),
 
-                      Map<String,dynamic> data={
-                    "tripid": Timestamp.now().millisecondsSinceEpoch,
-                    "tripname": _tripname.text,
-                    "location": _location.text,
-                    "startdate":_startdate.text,
-                    "enddate": _enddate.text,
-                     };
-                  _trip.add(data);
-                      _tripname.text='';
-                      _location.text='';
-                      _startdate.text='';
-                      _enddate.text='';
+                  ),
+                  onPressed: ()async{
 
+                        Map<String,dynamic> data={
+                      "tripid": Timestamp.now().millisecondsSinceEpoch,
+                      "tripname": _tripname.text,
+                      "location": _location.text,
+                      "startdate":_startdate.text,
+                      "enddate": _enddate.text,
+                       };
+                    _trip.add(data);
+                        _tripname.text='';
+                        _location.text='';
+                        _startdate.text='';
+                        _enddate.text='';
 
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) => MainScreen()));
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return MainScreen();
-                      },
-                    ),
-                  );
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
-                      Navigator.of(context).pop();
-
-                }
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
+                  }
+              ),
             )
           ],
 

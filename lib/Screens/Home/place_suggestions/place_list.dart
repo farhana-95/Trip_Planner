@@ -14,13 +14,11 @@ class _PlaceListState extends State<PlaceList> {
 
  PlaceService placeService = new PlaceService();
   List<PlaceModel> _placeData = [];
+ List<PlaceModel> newPlaceList = [];
 
  final TextEditingController _searchController = TextEditingController();
  List<PlaceModel> placeList = [];
- List<PlaceModel>? placeListSearch;
  final FocusNode _textFocusNode = FocusNode();
-
- List<PlaceModel> _newPlaceList = [];
 
  @override
  void initState() {
@@ -36,9 +34,10 @@ class _PlaceListState extends State<PlaceList> {
 
  void _onItemChanged(String value) {
    setState(() {
-     _newPlaceList = placeList.where((val) {
+     newPlaceList = _placeData.where((val) {
        return val.name!.toLowerCase().contains(value.toLowerCase());
      }).toList();
+   //  print("search  ${}")
    });
  }
 
@@ -54,14 +53,14 @@ class _PlaceListState extends State<PlaceList> {
               TextFormField(
                 decoration: InputDecoration(
                   suffixIcon: Icon(Icons.search),
-                  hintText: 'Search City',
+                  hintText: 'Search ',
                 ),
                 onChanged: _onItemChanged,
               ),
               const SizedBox(height: 10,),
               Expanded(
                 child:
-                ListView.builder(itemCount: _placeData.length,
+                ListView.builder(itemCount: newPlaceList.isEmpty ? _placeData.length : newPlaceList.length,
                     itemBuilder: (BuildContext context, int i) {
                       return GestureDetector(
                         child: Container(
@@ -79,13 +78,13 @@ class _PlaceListState extends State<PlaceList> {
                                   decoration:const BoxDecoration(
                                       borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(22))),
-                                  child: Image.network('${_placeData[i].image}',
+                                  child: Image.network('${newPlaceList.isEmpty ? _placeData[i].image : newPlaceList[i].image}',
                                       fit: BoxFit.fill),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10,right: 7),
                                   child: Text(
-                                    "\n${_placeData[i].name}",
+                                    "\n${newPlaceList.isEmpty ? _placeData[i].name : newPlaceList[i].name }",
                                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
                                   ),
                                 ),
@@ -95,7 +94,7 @@ class _PlaceListState extends State<PlaceList> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10,right: 7),
                                   child: Text(
-                                    "Location: ${_placeData[i].area}",
+                                    "Location: ${newPlaceList.isEmpty ? _placeData[i].area : newPlaceList[i].area }",
                                     style: const TextStyle(fontSize: 15,color: Color(0xFF868585)),
                                   ),
 
@@ -105,7 +104,7 @@ class _PlaceListState extends State<PlaceList> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10,right: 7),
                                   child: Text(
-                                    "Rating: ${_placeData[i].rate}",
+                                    "Rating: ${newPlaceList.isEmpty ? _placeData[i].rate : newPlaceList[i].rate }",
                                     style: const TextStyle(fontSize: 14,color: Colors.blue),
                                   ),
 
@@ -134,9 +133,9 @@ class _PlaceListState extends State<PlaceList> {
                                     children: [
                                       const Text("Description:\n\n",
                                         style: TextStyle(color: Color(0xFF868585),fontWeight: FontWeight.bold,fontSize: 16),),
-                                      Expanded(child: Text("${_placeData[i].about}",
+                                      Expanded(child: Text("${newPlaceList.isEmpty ? _placeData[i].about : newPlaceList[i].about }",
                                         style: const TextStyle(fontSize: 16,height: 1.5),)),
-                                      Text('Tourist Time: ${_placeData[i].time}',style: TextStyle(fontSize: 16),),
+                                      Text('Tourist Time: ${newPlaceList.isEmpty ? _placeData[i].time : newPlaceList[i].time }',style: TextStyle(fontSize: 16),),
                                       Padding(
                                         padding: const EdgeInsets.only(left: 230,top: 18),
                                         child: ElevatedButton(onPressed: (){
@@ -144,7 +143,6 @@ class _PlaceListState extends State<PlaceList> {
                                               .push(MaterialPageRoute(
                                               builder: (context) => AddTrips(name: "${_placeData[i].name}",area: "${_placeData[i].area}",)));
 
-                                          print("${_placeData[i].name}");
                                         },
                                             child: Row(
                                               children: const [

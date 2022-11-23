@@ -45,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
 
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
-          backgroundColor: kPrimaryLightColor,
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.backpack, color: kPrimaryColor,),
