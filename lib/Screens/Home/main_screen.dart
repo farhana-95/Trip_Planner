@@ -5,12 +5,13 @@ import 'package:trip_planner/Screens/page_appbar.dart';
 import 'package:trip_planner/constants.dart';
 import 'Notifications/notifications.dart';
 import 'Profile/profile.dart';
+import 'Trips/Expense/Category/category_model.dart';
 import 'Trips/show_trip.dart';
 
 
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+   MainScreen({Key? key}) : super(key: key);
 
 
   @override
@@ -18,9 +19,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
+  List<Cat> catList =  [];
   int currentIndex= 0;
-  List<Widget> pages = const [
+  List<Widget> pages =  [
     Trip(),
     PlaceList(),
     NotificationAlert(),

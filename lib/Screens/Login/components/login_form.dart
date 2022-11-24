@@ -5,6 +5,7 @@ import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../models/loginuser.dart';
 import '../../../services/auth.dart';
+import '../../Home/Trips/Expense/Category/category_service.dart';
 import '../../Signup/signup_screen.dart';
 
 
@@ -20,7 +21,7 @@ class _LoginFormState extends State<LoginForm> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final AuthService _auth = new AuthService();
-
+  final CommonService _commonService = CommonService();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -81,6 +82,7 @@ class _LoginFormState extends State<LoginForm> {
                       });
                 }
                 else{
+                  _commonService.saveCategories();
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   prefs.setString('email', 'useremail@gmail.com');
                   Navigator.push(

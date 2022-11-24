@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/Category/category_service.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/view_expense.dart';
 import 'package:trip_planner/constants.dart';
 
+import 'Category/category_model.dart';
+
 class Expense extends StatefulWidget {
-  const Expense({Key? key}) : super(key: key);
+  Cat? category;
+   Expense({Key? key,this.category}) : super(key: key);
 
   @override
   State<Expense> createState() => _ExpenseState();
@@ -30,10 +34,10 @@ class _ExpenseState extends State<Expense> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body:  TabBarView(
           children: <Widget>[
-           AddExpense(),
-            ViewExpense(),
+          AddExpense(category: widget.category,),
+            const ViewExpense(),
           ],
         ),
       ),

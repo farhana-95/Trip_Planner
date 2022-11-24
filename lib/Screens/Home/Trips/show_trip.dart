@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/Notifications/alarm_manager/alarm_manager.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/Category/category_service.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/show_plans.dart';
 import 'package:trip_planner/Screens/Home/Trips/add_trips.dart';
 import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 import '../Notifications/LocalDB/Localdb.dart';
-import '../Notifications/notification_service.dart';
+import 'Expense/Category/category_model.dart';
 class Trip extends StatefulWidget {
-  const Trip({Key? key}) : super(key: key);
+   Trip({Key? key}) : super(key: key);
   @override
   State<Trip> createState() => _TripState();
 }
@@ -25,7 +26,6 @@ class _TripState extends State<Trip> {
   final _enddate = TextEditingController();
   final _tripname = TextEditingController();
   final _triptime = TextEditingController();
-    NotificationService _notificationService = NotificationService();
 
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
@@ -192,7 +192,7 @@ class _TripState extends State<Trip> {
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Trip Deleted!")));
   }
-
+  List<Cat> catList =  [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,10 +208,7 @@ class _TripState extends State<Trip> {
                     itemBuilder: (context, index) {
                       final DocumentSnapshot documentSnapshot =
                           streamSnapshot.data!.docs[index];
-                      //DateTime dt1 = DateTime.parse(documentSnapshot['enddate']);
                       DateTime dt2 =DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
-
-                      //var t=DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
                       if(dt2.isAfter(new DateTime.now())){
                         return Card(
                           margin: const EdgeInsets.all(10),
@@ -237,107 +234,79 @@ class _TripState extends State<Trip> {
                                 Text("Ends:  ${documentSnapshot['enddate']}",style: TextStyle(fontSize: 15.5),),
                               ],
                             ),
+
                             trailing:PopupMenuButton<int>(
                               itemBuilder: (context)=>
                               [
                                 PopupMenuItem(
                                   value: 1,
                                   child:
-                                GestureDetector(
-                                  child: Row(
-                                    children: [
-                                      const Text('Update'),
-                                      const SizedBox(width: 27,),
-                                      IconButton(onPressed: () =>_update(documentSnapshot),
-                                                    icon: const Icon(
-                                                      Icons.edit,
-                                                    ),
-                                                  ),
-                                    ],
-                                  ),
-                                  onTap: ()=>_update(documentSnapshot),
+                                Row(
+                                  children: const [
+                                    Text('Update'),
+                                    SizedBox(width: 44,),
+                                    Icon(Icons.edit),
+                                  ],
                                 ),
                                 ),
                                 PopupMenuItem(
                                   value:2,
-                                  child: GestureDetector(
-                                    child: Row(
-                                      children: [
-                                        Text('View Plans'),
-                                        IconButton(
-                                                    onPressed: () { Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) => ShowPlans(
-                                                                tripid: documentSnapshot[
-                                                                'tripid'])));},
-                                                    icon: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                    ),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: (){
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => ShowPlans(
-                                                  tripid: documentSnapshot[
-                                                  'tripid'])));
-                                    },
+                                  child: Row(
+                                    children: const [
+                                      Text('View Plans'),
+                                      SizedBox(width: 17,),
+                                      Icon(Icons.arrow_forward_ios),
+                                    ],
                                   ),
                                 ),
                                 PopupMenuItem(
                                   value:3,
-                                  child: GestureDetector(
-                                    child: Row(
-                                      children: [
-                                        const Text('Expense'),
-                                        const SizedBox(width: 18,),
-                                        IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) => const Expense()));},
-                                          icon: const Icon(
-                                            Icons.monetization_on,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: (){
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => const Expense()));
-                                    },
+                                  child: Row(
+                                    children: const [
+                                      Text('Expense'),
+                                      SizedBox(width: 32,),
+                                      Icon(Icons.monetization_on),
+                                    ],
                                   ),
                                 ),
                                 PopupMenuItem(
                                   value: 4,
-                                  child:  GestureDetector(
-                                    child: Row(
-                                      children: [
-                                        const Text('Delete Trip'),
-                                        const SizedBox(width: 17,),
-                                        Icon(Icons.delete),
-                                      ],
-                                    ),
-                                    onTap: ()=> showDialog(context: context,
-                                        builder: (BuildContext context)=>
-                                     AlertDialog(
-                                      title: Text('Alert!'),
-                                      content: Text('Do you want to delete it anyway?'),
-                                      actions:<Widget> [
-                                        TextButton(onPressed: (){
-                                          _delete(documentSnapshot.id);
-                                          Navigator.pop(context);
-                                        }, child: Text("Ok")),
-                                        TextButton(onPressed: (){ Navigator.pop(context);}, child: Text("Cancel"))
-                                      ],
-                                    )
-                                    )
-                                        // _delete(documentSnapshot.id),
+                                  child:  Row(
+                                    children: const [
+                                      Text('Delete Trip'),
+                                      SizedBox(width: 17,),
+                                      Icon(Icons.delete),
+                                    ],
                                   ),
                                 ),
                               ],
+                             onSelected:(val){
+                                switch (val){
+                                  case 1: _update(documentSnapshot);break;
+                                  case 2: Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => ShowPlans(
+                                              tripid: documentSnapshot[
+                                              'tripid'])));break;
+                                  case 3:  Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => Expense()));break;
+                                  case 4: showDialog(context: context,
+                                      builder: (BuildContext context)=>
+                                          AlertDialog(
+                                            title: Text('Alert!'),
+                                            content: Text('Do you want to delete it anyway?'),
+                                            actions:<Widget> [
+                                              TextButton(onPressed: (){
+                                                _delete(documentSnapshot.id);
+                                                Navigator.pop(context);
+                                              }, child: const Text("Ok")),
+                                              TextButton(onPressed: (){ Navigator.pop(context);}, child: const Text("Cancel"))
+                                            ],
+                                          )
+                                  );break;
+                                }
+                             } ,
                             )
                           ),
                         );
@@ -359,6 +328,7 @@ class _TripState extends State<Trip> {
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => AddTrips(name: '', area: '',)));
+
         },
         child: const Icon(Icons.add),
       ),

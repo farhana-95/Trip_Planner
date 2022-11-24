@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/addplan_details.dart';
 import '../../../constants.dart';
 import 'package:intl/intl.dart';
@@ -916,6 +917,14 @@ class _ShowPlansState extends State<ShowPlans> {
               MaterialPageRoute(
                 builder: (context) {
                   return PlanDetails(tripid: tripId);
+                },
+              ),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return AddExpense(tripid: tripId);
                 },
               ),
             );

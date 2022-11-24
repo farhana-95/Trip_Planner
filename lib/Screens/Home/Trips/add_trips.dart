@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/show_trip.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
 import 'package:trip_planner/constants.dart';
@@ -39,13 +40,13 @@ class _AddTripsState extends State<AddTrips> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text('Add Trips'),
+        title: const Text('Add Trips'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children:<Widget> [
             Column(children:[
-              SizedBox(height: 20,width: 20,),
+              const SizedBox(height: 20,width: 20,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -89,7 +90,7 @@ class _AddTripsState extends State<AddTrips> {
                 child: TextFormField(
                   controller: _startdate,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Start Date & Time',
                     labelStyle: TextStyle(
@@ -118,7 +119,7 @@ class _AddTripsState extends State<AddTrips> {
                 child: TextFormField(
                   controller: _enddate,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'End Date ',
                     labelStyle: TextStyle(
@@ -143,12 +144,12 @@ class _AddTripsState extends State<AddTrips> {
                 ),
               ),
              ]
-            ),SizedBox(height: 10,),
+            ),const SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 120),
               child: ElevatedButton(
 
-                  child: Text('Save',
+                  child: const Text('Save',
                     style: TextStyle(color: Colors.white),
 
                   ),
