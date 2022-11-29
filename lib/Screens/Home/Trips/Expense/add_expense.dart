@@ -1,44 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:trip_planner/Screens/Home/Trips/Expense/expense_model.dart';
 import 'Category/category_model.dart';
 import 'Category/show_category.dart';
-
 class AddExpense extends StatefulWidget {
     Cat? category;
-     int?  tripid;
-   AddExpense({Key? key, this.category,  this.tripid
+
+   AddExpense({Key? key, this.category,  required this.tripid
    }) : super(key: key);
+    final int tripid;
 
   @override
   State<AddExpense> createState() => _AddExpenseState();
 }
 
 class _AddExpenseState extends State<AddExpense> {
-  ExpenseModel expModel = ExpenseModel();
    static int tripId = 0 ;
-     late CollectionReference addExpense;
-  final amount=TextEditingController();
-  final expenseCat=TextEditingController();
-  final date=TextEditingController();
+  late final CollectionReference _expense;
+  final TextEditingController amount=TextEditingController();
+  final TextEditingController expenseCat=TextEditingController();
+  final TextEditingController date=TextEditingController();
    int iconId = 0;
 
   @override
   void initState(){
-    tripId = widget.tripid!;
+    tripId = widget.tripid;
     expenseCat.text = widget.category?.name ?? "";
     iconId = widget.category?.icon ?? 0;
 
-    addExpense = FirebaseFirestore.instance.collection("$tripId").doc("addExpense").collection("$tripId");
+    _expense = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("expense");
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +46,40 @@ class _AddExpenseState extends State<AddExpense> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                controller: amount,
+                controller: expenseCat,
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
+
+                decoration: InputDecoration(
+                  prefixIcon:  iconId == 0? null :Icon(IconDataSolid(iconId)),
+                  border: UnderlineInputBorder(),
+                  labelText: 'Category ',
+                  labelStyle: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.black,
+                    //fontWeight: FontWeight.bold
+                  ),
+                  hintText: 'Select Category',
+                ),
+                onSaved: (item){
+                },
+                onTap: (){
+
+                  showModalBottomSheet(context: context,
+                      builder: (BuildContext context){
+                        return  CategoryScreen(tripid: tripId,);
+                      });
+
+                },
+              ),
+            ),
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: amount,
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Amount ',
@@ -64,45 +90,18 @@ class _AddExpenseState extends State<AddExpense> {
                   hintText: 'Enter Amount',
                 ),
                 onSaved: (amount){
-                },
-              ),
-            ),
-            SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: expenseCat,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
 
-                decoration: InputDecoration(
-                  prefixIcon:  iconId == 0? null :Icon(IconDataSolid(iconId)),
-                  border: UnderlineInputBorder(),
-                  labelText: 'Category ',
-                  labelStyle: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                    //fontWeight: FontWeight.bold
-                  ),
-                  hintText: 'Select Category',
-                ),
-                onSaved: (item){
                 },
-                onTap: (){
-                  showModalBottomSheet(context: context,
-                      builder: (BuildContext context){
-                        return const CategoryScreen();
-                      });
-                },
+
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: date,
                 keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Date ',
@@ -128,16 +127,33 @@ class _AddExpenseState extends State<AddExpense> {
                 },
               ),
             ),
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 120),
               child: ElevatedButton(
-                onPressed: (){
-                  expModel.toMap();
+                onPressed: ()async{
+                  Map<String,dynamic> data={
+                    'amount': double.parse(amount.text),
+                    'expenseCat': expenseCat.text,
+                    'date': date.text,
+                  };
+                  if (kDebugMode) {
+                    print("addExpense   $data");
+                  }
+                  _expense.add(data).then((value) {
+                    amount.clear();
+                    expenseCat.clear();
+                    date.clear();
+                  });
+                  Navigator.pop(context);
+
+
                 },
+
               child: const Text("Submit"),),
             )
           ],
+
         ),
       )
     );

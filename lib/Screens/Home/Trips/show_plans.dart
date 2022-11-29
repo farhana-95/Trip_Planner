@@ -5,6 +5,8 @@ import 'package:trip_planner/Screens/Home/Trips/addplan_details.dart';
 import '../../../constants.dart';
 import 'package:intl/intl.dart';
 
+import 'allData.dart';
+
 class ShowPlans extends StatefulWidget {
   const ShowPlans( {Key? key, required this.tripid}) : super(key: key);
   final int tripid;
@@ -653,12 +655,17 @@ class _ShowPlansState extends State<ShowPlans> {
   @override
   void initState() {
     tripId = widget.tripid;
-    _activityplan = FirebaseFirestore.instance.collection("$tripId").doc("activityplan").collection("$tripId");
-    _transport = FirebaseFirestore.instance.collection("$tripId").doc("transport").collection("$tripId");
-    _restaurant = FirebaseFirestore.instance.collection("$tripId").doc("restaurant").collection("$tripId");
-    _accomodation = FirebaseFirestore.instance.collection("$tripId").doc("accomodation").collection("$tripId");
-    _addnotes = FirebaseFirestore.instance.collection("$tripId").doc("addnotes").collection("$tripId");
+    _activityplan = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("activityplan");
+    _transport = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("transport");
+    _restaurant = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("restaurant");
+    _accomodation = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("accomodation");
+    _addnotes = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("addnotes");
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -924,7 +931,7 @@ class _ShowPlansState extends State<ShowPlans> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return AddExpense(tripid: tripId);
+                  return AllData(tripid: tripId);
                 },
               ),
             );

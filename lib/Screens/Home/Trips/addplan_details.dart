@@ -22,11 +22,11 @@ class _PlanDetailsState extends State<PlanDetails> {
   @override
   void initState() {
     tripId = widget.tripid;
-    _activityplan = FirebaseFirestore.instance.collection("$tripId").doc("activityplan").collection("$tripId");
-    _transport = FirebaseFirestore.instance.collection("$tripId").doc("transport").collection("$tripId");
-    _restaurant = FirebaseFirestore.instance.collection("$tripId").doc("restaurant").collection("$tripId");
-    _accomodation = FirebaseFirestore.instance.collection("$tripId").doc("accomodation").collection("$tripId");
-    _addnotes = FirebaseFirestore.instance.collection("$tripId").doc("addnotes").collection("$tripId");
+    _activityplan = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("activityplan");
+    _transport = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("transport");
+    _restaurant = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("restaurant");
+    _accomodation = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("accomodation");
+    _addnotes = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("addnotes");
   }
   int _activeCurrentStep = 0;
   final activitytitile = TextEditingController();

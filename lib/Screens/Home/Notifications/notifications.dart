@@ -21,7 +21,8 @@ class _NotificationAlertState extends State<NotificationAlert> {
   var box =  Hive.openBox<NotificationListModel>('TripBox1');
 
   @override
-  void initState() {
+  void initState()
+  {
     super.initState();
     localDb.getLocalData().then((val) {
       setState(() {

@@ -7,26 +7,23 @@ import '../expense.dart';
 import 'category_model.dart';
 import 'category_service.dart';
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  final int tripid;
+   CategoryScreen({Key? key,required this.tripid}) : super(key: key);
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 class _CategoryScreenState extends State<CategoryScreen> {
-  // final DocumentReference<Map<String, dynamic>> _category=
-  // FirebaseFirestore.instance.collection('category').doc("0");
+  static int tripId = 0 ;
+
   final CommonService _commonService = CommonService();
 
   List<Cat> catList =  [];
   final FocusNode _textFocusNode = FocusNode();
 
-  @override
-  void dispose() {
-    _textFocusNode.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
+    tripId = widget.tripid;
     print("commonService 2 ${catList.length}");
     super.initState();
   }
@@ -34,60 +31,57 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Expanded(
-            //flex: 3,
-            child: FutureBuilder<List<Cat>>(
-              future: _commonService.retrieveCategories(),
-              builder: (context,future) {
-                if(!future.hasData) {
-                  return Container();
-                } else {
-                  catList = future.data!;
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: catList.length,
-                      itemBuilder: (context, index) {
-                        // late String position=index.toString();
-                        //  if(_searchController.text.isEmpty){
-                        return Card(
-                          elevation: 1,
-                          child: ListTile(
-                            onTap: () async {
-                              Future.delayed(Duration.zero, () {
-                                setState(() {
-                                  Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return Expense(
-                                             category: catList[index]
-                                        );
-                                      },
-                                    ),
-                                  );
-                                });
+      body: Column(
+        children:<Widget> [
+      Expanded(
+          //flex: 3,
+          child: FutureBuilder<List<Cat>>(
+            future: _commonService.retrieveCategories(),
+            builder: (context,future) {
+              if(!future.hasData) {
+                return Container();
+              } else {
+                catList = future.data!;
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: catList.length,
+                    itemBuilder: (context, index) {
+                      // late String position=index.toString();
+                      //  if(_searchController.text.isEmpty){
+                      return Card(
+                        elevation: 1,
+                        child: ListTile(
+                          onTap: () async {
+                            Future.delayed(Duration.zero, () {
+                              setState(() {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return Expense(
+                                           category: catList[index], tripid: tripId,
+                                      );
+                                    },
+                                  ),
+                                );
                               });
-                            },
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.white,
-                                child: Icon(IconDataSolid(
+                            });
+                          },
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white,
+                              child: Icon(IconDataSolid(
 
-                                    catList[index].icon), size: 20,color: kPrimaryColor,)
+                                  catList[index].icon), size: 20,color: kPrimaryColor,)
 
-                            ),
-                            title: Text(catList[index].name),
                           ),
-                        );
-                      });
-                }
-              },),
+                          title: Text(catList[index].name),
+                        ),
+                      );
+                    });
+              }
+            },),
 
-          ),
-        ),
+        ),]
       ),
     );
   }

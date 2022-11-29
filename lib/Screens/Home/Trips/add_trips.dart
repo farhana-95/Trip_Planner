@@ -53,7 +53,7 @@ class _AddTripsState extends State<AddTrips> {
             controller: _tripname,
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Trip Name ',
                     labelStyle: TextStyle(
@@ -72,7 +72,7 @@ class _AddTripsState extends State<AddTrips> {
                   controller: _location,
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Location ',
                     labelStyle: TextStyle(
@@ -173,6 +173,9 @@ class _AddTripsState extends State<AddTrips> {
 
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
+                        setState(() {
+
+                        });
                   }
               ),
             )

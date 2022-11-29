@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/Notifications/alarm_manager/alarm_manager.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/Category/category_service.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/show_plans.dart';
 import 'package:trip_planner/Screens/Home/Trips/add_trips.dart';
@@ -9,8 +10,9 @@ import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 import '../Notifications/LocalDB/Localdb.dart';
 import 'Expense/Category/category_model.dart';
+import 'allData.dart';
 class Trip extends StatefulWidget {
-   Trip({Key? key}) : super(key: key);
+   Trip({Key? key,}) : super(key: key);
   @override
   State<Trip> createState() => _TripState();
 }
@@ -26,6 +28,8 @@ class _TripState extends State<Trip> {
   final _enddate = TextEditingController();
   final _tripname = TextEditingController();
   final _triptime = TextEditingController();
+
+
 
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
@@ -193,6 +197,8 @@ class _TripState extends State<Trip> {
         .showSnackBar(const SnackBar(content: Text("Trip Deleted!")));
   }
   List<Cat> catList =  [];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -283,14 +289,21 @@ class _TripState extends State<Trip> {
                              onSelected:(val){
                                 switch (val){
                                   case 1: _update(documentSnapshot);break;
-                                  case 2: Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => ShowPlans(
-                                              tripid: documentSnapshot[
-                                              'tripid'])));break;
+                                   case 2:Navigator.of(context).push(
+                                       MaterialPageRoute(
+                                           builder: (context) => AllData(
+                                               tripid: documentSnapshot[
+                                               'tripid'])));break;
+                                // Navigator.of(context).push(
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => ShowPlans(
+                                  //             tripid: documentSnapshot[
+                                  //             'tripid'])));break;
                                   case 3:  Navigator.of(context).push(
                                       MaterialPageRoute(
-                                          builder: (context) => Expense()));break;
+                                          builder: (context) => Expense(tripid: documentSnapshot[
+                                          'tripid'])));
+                                  break;
                                   case 4: showDialog(context: context,
                                       builder: (BuildContext context)=>
                                           AlertDialog(
@@ -336,3 +349,4 @@ class _TripState extends State<Trip> {
     );
   }
 }
+
