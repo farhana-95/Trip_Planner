@@ -16,7 +16,7 @@ factory UserModel.fromMap(map){
 
   );
 }
-//sending data to server
+// sending data to server
 Map<String, dynamic> toMap(){
   return{
     'email': email,
@@ -24,5 +24,9 @@ Map<String, dynamic> toMap(){
     'number': number,
   };
 }
+  static fromJson(i) {
+    UserModel userModel = UserModel(email: i["email"],name: i["name"],number: i["number"]);
+    return userModel;
 
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/place_model.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/place_service.dart';
@@ -12,13 +11,10 @@ class PlaceList extends StatefulWidget {
 }
 class _PlaceListState extends State<PlaceList> {
 
- PlaceService placeService = new PlaceService();
+ PlaceService placeService = PlaceService();
   List<PlaceModel> _placeData = [];
  List<PlaceModel> newPlaceList = [];
-
- final TextEditingController _searchController = TextEditingController();
  List<PlaceModel> placeList = [];
- final FocusNode _textFocusNode = FocusNode();
 
  @override
  void initState() {
@@ -51,7 +47,7 @@ class _PlaceListState extends State<PlaceList> {
           child: Column(
             children:<Widget> [
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.search),
                   hintText: 'Search ',
                 ),
@@ -64,7 +60,7 @@ class _PlaceListState extends State<PlaceList> {
                     itemBuilder: (BuildContext context, int i) {
                       return GestureDetector(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 25),
+                          margin: const EdgeInsets.only(left: 10,right: 10,top: 10),
                           child: Card(
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -77,39 +73,46 @@ class _PlaceListState extends State<PlaceList> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   decoration:const BoxDecoration(
                                       borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(22))),
+                                          top: Radius.circular(22),bottom: Radius.circular(15))),
                                   child: Image.network('${newPlaceList.isEmpty ? _placeData[i].image : newPlaceList[i].image}',
                                       fit: BoxFit.fill),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10,right: 7),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 12,right: 6),
                                   child: Text(
                                     "\n${newPlaceList.isEmpty ? _placeData[i].name : newPlaceList[i].name }",
-                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+                                    style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 8,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10,right: 7),
-                                  child: Text(
-                                    "Location: ${newPlaceList.isEmpty ? _placeData[i].area : newPlaceList[i].area }",
-                                    style: const TextStyle(fontSize: 15,color: Color(0xFF868585)),
-                                  ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10,right: 6),
 
-                                ),const SizedBox(
-                                  height: 8,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        const WidgetSpan(
+                                          child: Icon(Icons.location_on,color: Color(0xFF868585),size: 17,),
+                                        ),
+                                        TextSpan(
+                                          text: '${newPlaceList.isEmpty ? _placeData[i].area : newPlaceList[i].area}',
+                                          style: const TextStyle(fontSize: 15,color: Color(0xFF868585)
+                                        ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10,right: 7),
+                                const Divider(height: 20,indent: 10,endIndent: 10,),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 14,right: 6),
                                   child: Text(
                                     "Rating: ${newPlaceList.isEmpty ? _placeData[i].rate : newPlaceList[i].rate }",
-                                    style: const TextStyle(fontSize: 14,color: Colors.blue),
+                                    style: const TextStyle(fontSize: 14,color: Colors.blue,),
                                   ),
-
                                 ),
-
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -118,7 +121,8 @@ class _PlaceListState extends State<PlaceList> {
                           ),
                         ),
                         onTap: (){
-                          showModalBottomSheet(context: context,
+                          showModalBottomSheet<dynamic>(context: context,
+                              isScrollControlled: true,
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(23.0),
@@ -128,31 +132,52 @@ class _PlaceListState extends State<PlaceList> {
                               builder: (BuildContext context){
 
                                 return Container(
-                                  padding: const EdgeInsets.only(left: 16,top: 10,right: 13),
-                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Description:\n\n",
-                                        style: TextStyle(color: Color(0xFF868585),fontWeight: FontWeight.bold,fontSize: 16),),
-                                      Expanded(child: Text("${newPlaceList.isEmpty ? _placeData[i].about : newPlaceList[i].about }",
-                                        style: const TextStyle(fontSize: 16,height: 1.5),)),
-                                      Text('Tourist Time: ${newPlaceList.isEmpty ? _placeData[i].time : newPlaceList[i].time }',style: TextStyle(fontSize: 16),),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 230,top: 18),
-                                        child: ElevatedButton(onPressed: (){
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                              builder: (context) => AddTrips(name: "${_placeData[i].name}",area: "${_placeData[i].area}",)));
+                                  height: MediaQuery.of(context).size.height * 0.78,
 
-                                        },
-                                            child: Row(
-                                              children: const [
-                                                Text("Add to Trip"),
-                                                Icon(Icons.add),
-                                              ],
-                                            )
+                                  padding: const EdgeInsets.only(left: 18,right: 15),
+                                  child: SingleChildScrollView(
+                                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                      children:<Widget> [
+                                         Text( "\n${newPlaceList.isEmpty ? _placeData[i].name : newPlaceList[i].name }",
+                                          style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+
+                                        const Divider(height: 20,indent: 1,endIndent: 180,thickness: 2,color: Colors.blueAccent,),
+
+                                        Text("${newPlaceList.isEmpty ? _placeData[i].about : newPlaceList[i].about }",
+                                          style: const TextStyle(fontSize: 16,height: 1.5),),
+
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 28),
+                                          child: const Text("Tourist Attractions",style: TextStyle(fontWeight: FontWeight.bold),),),
+                                        const Divider(height: 20,indent: 160,endIndent: 1,thickness: 2,color: Colors.green,),
+
+                                        Text("${newPlaceList.isEmpty ? _placeData[i].attractions : newPlaceList[i].attractions }",
+                                          style: const TextStyle(fontSize: 16,height: 1.5),),
+
+                                        Container(margin: const EdgeInsets.only(top: 15),
+                                            child: const Text("Tourist Time:",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                        const Divider(height: 20,indent: 1,endIndent: 265,thickness: 1.5,color: Colors.blue,),
+                                        Text(' ${newPlaceList.isEmpty ? _placeData[i].time : newPlaceList[i].time }',style: const TextStyle(fontSize: 16),),
+                                        Container(
+                                          margin: const EdgeInsets.only(left: 216,right: 9,top: 10),
+                                          child: ElevatedButton(
+                                              onPressed: (){
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                builder: (context) => AddTrips(name: "${_placeData[i].name}",
+                                                  area: "${_placeData[i].area}",
+                                                    image: "${_placeData[i].image}")));
+                                          },
+                                              child: Row(
+                                                children: const [
+                                                  Text("Add to Trip"),
+                                                  Icon(Icons.add),
+                                                ],
+                                              ),
+                                          ),
                                         ),
-                                      )
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               });
@@ -166,6 +191,5 @@ class _PlaceListState extends State<PlaceList> {
         ),
       )
     );
-
   }
 }

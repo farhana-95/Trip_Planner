@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/Profile/Help/get_help.dart';
 import '../../../../constants.dart';
@@ -12,10 +13,31 @@ class Help extends StatefulWidget {
 
 class _HelpState extends State<Help> {
 
-  final CollectionReference _help=
-  FirebaseFirestore.instance.collection('help');
-  final _helpQuestions=TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  late String  Id;
+  getCurrentUser() {
+    final User? user = _auth.currentUser;
+    final uid = user!.uid;
+    //final uemail = user.email;
+    //final uname = user.name;
+    //var text = Text('Mail: $uemail');
+    print(uid);
+    // print(_userInfo);
+    return uid;
+  }
+  late final CollectionReference _help;
+
+  final _helpQuestions =TextEditingController();
+  @override
+  void initState() {
+
+    Id= getCurrentUser();
+    print("Iddd     $Id");
+    _help = FirebaseFirestore.instance.collection("help").doc(Id).collection("help");
+    super.initState();
+
+  }
   Widget Report(){
     return Container(
       height: 230.0,
@@ -46,7 +68,7 @@ class _HelpState extends State<Help> {
           SizedBox(height: 20,),
           MaterialButton(
               color: kPrimaryColor,
-              child: Text('Submit',
+              child: const Text('Submit',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: ()async{

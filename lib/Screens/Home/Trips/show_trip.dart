@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:trip_planner/Screens/Home/Notifications/alarm_manager/alarm_manager.dart';
-import 'package:trip_planner/Screens/Home/Trips/Expense/Category/category_service.dart';
-import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/expense.dart';
-import 'package:trip_planner/Screens/Home/Trips/show_plans.dart';
+import 'package:trip_planner/Screens/Home/Trips/Invite_User/invite_user.dart';
+import 'package:trip_planner/Screens/Home/Trips/ShowPlans/show_plans.dart';
 import 'package:trip_planner/Screens/Home/Trips/add_trips.dart';
 import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 import '../Notifications/LocalDB/Localdb.dart';
 import 'Expense/Category/category_model.dart';
-import 'allData.dart';
 class Trip extends StatefulWidget {
    Trip({Key? key,}) : super(key: key);
   @override
@@ -21,15 +21,30 @@ class _TripState extends State<Trip> {
   Localdb localDb =  Localdb();
   SetAlarm alarm =  SetAlarm();
 
-  final CollectionReference _trip =
-      FirebaseFirestore.instance.collection('trip');
   final _location = TextEditingController();
   final _startdate = TextEditingController();
   final _enddate = TextEditingController();
   final _tripname = TextEditingController();
   final _triptime = TextEditingController();
+  final  img= TextEditingController();
 
 
+  late final CollectionReference _trip;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  getCurrentUser() {
+    final User? user = _auth.currentUser;
+    final uid = user!.uid;
+
+    return uid;
+  }
+  late String  Id;
+  @override
+  void initState() {
+    Id = getCurrentUser();
+    print("ID-   $Id");
+    _trip = FirebaseFirestore.instance.collection("trip").doc(Id).collection("trip");
+    super.initState();
+  }
 
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
@@ -48,7 +63,7 @@ class _TripState extends State<Trip> {
                 top: 18,
                 left: 20,
                 right: 20,
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 25),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,30 +132,11 @@ class _TripState extends State<Trip> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child:
-                  TextField(
-                    controller: _triptime,
-                    decoration: const InputDecoration(
-                        hintText: 'Set Time for Reminder'
-                    ),
-                    onTap: ()async{
-                      TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
-                      if(tpm != null)
-                      {
-                        setState(() {
-                          _triptime.text= tpm.format(context);
-                        });
-                      }
-                    },
-                  ),
-                ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
+                  padding: const EdgeInsets.only(left: 75,right: 75,bottom: 10),
                   child: ElevatedButton(
                     child: const Text('Update'),
                     onPressed: () async {
@@ -148,20 +144,17 @@ class _TripState extends State<Trip> {
                       final String tlocation = _location.text;
                       final String tstdate = _startdate.text;
                       final String tedate = _enddate.text;
-                      final String tptime = _triptime.text;
 
                       await _trip.doc(documentSnapshot!.id).update({
                         "tripname": tname,
                         "location": tlocation,
                         "startdate": tstdate,
                         "enddate": tedate,
-                        "reminder": tptime
                       });
                       _tripname.text = '';
                       _location.text = '';
                       _startdate.text = '';
                       _enddate.text = '';
-                      _triptime.text='';
 
                       ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(content: Text("Updated")));
@@ -170,7 +163,7 @@ class _TripState extends State<Trip> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 75,right: 75),
                   child: ElevatedButton(
 
                     child: const Text('Set Reminder'),
@@ -219,108 +212,144 @@ class _TripState extends State<Trip> {
                         return Card(
                           margin: const EdgeInsets.all(10),
                           elevation: 3,
-                          child: ListTile(
-                            leading: Image.asset("assets/images/baggage.png"),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(right: 8),
+                              width: 120,height: 130,
+                                child: Image.network('${documentSnapshot['image']}',fit: BoxFit.cover,)
+                                //Image.asset("assets/images/trip.png",fit: BoxFit.cover,),
+                          ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Trip: ${documentSnapshot['tripname']}",
+                                Text("${documentSnapshot['tripname']}",
                                   style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                                 const SizedBox(height: 7,),
-                                Text("Location: ${documentSnapshot['location']} "),
+                                Container(
+                                  width: 190,
+                                  child:
+                                  Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        const WidgetSpan(
+                                          child: Icon(Icons.location_on_outlined,size: 17,color: Colors.grey,),
+                                        ),
+                                        TextSpan(
+                                          text: '${documentSnapshot['location']}\n',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text("Starts: ${documentSnapshot['startdate']}",
+                                  style: const TextStyle(fontSize: 15),),
+                                const SizedBox(height: 7,),
+                                Text("Ends:  ${documentSnapshot['enddate']}",style: TextStyle(fontSize: 15),),
                                 const SizedBox(height: 10,)
                               ],
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text("Starts: ${documentSnapshot['startdate']}",
-                                style: const TextStyle(fontSize: 15.5),),
-                                const SizedBox(height: 7,),
-                                Text("Ends:  ${documentSnapshot['enddate']}",style: TextStyle(fontSize: 15.5),),
-                              ],
-                            ),
 
-                            trailing:PopupMenuButton<int>(
-                              itemBuilder: (context)=>
-                              [
-                                PopupMenuItem(
-                                  value: 1,
-                                  child:
-                                Row(
-                                  children: const [
-                                    Text('Update'),
-                                    SizedBox(width: 44,),
-                                    Icon(Icons.edit),
+                              Expanded(
+                                child:
+                                PopupMenuButton<int>(
+                                  itemBuilder: (context)=>
+                                  [
+                                    PopupMenuItem(
+                                      value: 1,
+                                      child:
+                                      Row(
+
+                                        children: const [
+                                          Text('Update', style: TextStyle(color: Color(
+                                              0xFF6C6C6C)),
+                                          ),
+                                          SizedBox(width: 49,),
+                                          Icon(Icons.edit,color:Colors.grey,),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value:2,
+                                      child: Row(
+                                        children: const [
+                                          Text('View Plans',style: TextStyle(color: Color(
+                                              0xFF6C6C6C)),),
+                                          SizedBox(width: 21.6,),
+                                          Icon(Icons.arrow_forward_ios,color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value:3,
+                                      child: Row(
+                                        children: const [
+                                          Text('Expense',style: TextStyle(color: Color(
+                                              0xFF6C6C6C)),),
+                                          SizedBox(width: 37,),
+                                          Icon(Icons.monetization_on,color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 4,
+                                      child:  Row(
+                                        children: const [
+                                          Text('Delete Trip',style: TextStyle(color: Color(
+                                              0xFF6C6C6C)),),
+                                          SizedBox(width: 23,),
+                                          Icon(Icons.delete,color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 5,
+                                      child:  Row(
+                                        children: const [
+                                          Text('Invite others',style: TextStyle(color: Color(
+                                              0xFF6C6C6C)),),
+                                          SizedBox(width: 12,),
+                                          Icon(Icons.insert_invitation,color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
                                   ],
+                                  onSelected:(val){
+                                    switch (val){
+                                      case 1: _update(documentSnapshot);break;
+                                      case 2:
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) => ShowPlans(
+                                                    tripid: documentSnapshot[
+                                                    'tripid'])));break;
+                                      case 3:  Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Expense(tripid: documentSnapshot[
+                                              'tripid'])));
+                                      break;
+                                      case 4: showDialog(context: context,
+                                          builder: (BuildContext context)=>
+                                              AlertDialog(
+                                                title: Text('Alert!'),
+                                                content: Text('Do you want to delete it anyway?'),
+                                                actions:<Widget> [
+                                                  TextButton(onPressed: (){
+                                                    _delete(documentSnapshot.id);
+                                                    Navigator.pop(context);
+                                                  }, child: const Text("Ok")),
+                                                  TextButton(onPressed: (){ Navigator.pop(context);}, child: const Text("Cancel"))
+                                                ],
+                                              )
+                                      );break;
+                                      case 5: Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => InviteUser())); break;
+                                    }
+                                  } ,
                                 ),
-                                ),
-                                PopupMenuItem(
-                                  value:2,
-                                  child: Row(
-                                    children: const [
-                                      Text('View Plans'),
-                                      SizedBox(width: 17,),
-                                      Icon(Icons.arrow_forward_ios),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value:3,
-                                  child: Row(
-                                    children: const [
-                                      Text('Expense'),
-                                      SizedBox(width: 32,),
-                                      Icon(Icons.monetization_on),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value: 4,
-                                  child:  Row(
-                                    children: const [
-                                      Text('Delete Trip'),
-                                      SizedBox(width: 17,),
-                                      Icon(Icons.delete),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                             onSelected:(val){
-                                switch (val){
-                                  case 1: _update(documentSnapshot);break;
-                                   case 2:Navigator.of(context).push(
-                                       MaterialPageRoute(
-                                           builder: (context) => AllData(
-                                               tripid: documentSnapshot[
-                                               'tripid'])));break;
-                                // Navigator.of(context).push(
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => ShowPlans(
-                                  //             tripid: documentSnapshot[
-                                  //             'tripid'])));break;
-                                  case 3:  Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => Expense(tripid: documentSnapshot[
-                                          'tripid'])));
-                                  break;
-                                  case 4: showDialog(context: context,
-                                      builder: (BuildContext context)=>
-                                          AlertDialog(
-                                            title: Text('Alert!'),
-                                            content: Text('Do you want to delete it anyway?'),
-                                            actions:<Widget> [
-                                              TextButton(onPressed: (){
-                                                _delete(documentSnapshot.id);
-                                                Navigator.pop(context);
-                                              }, child: const Text("Ok")),
-                                              TextButton(onPressed: (){ Navigator.pop(context);}, child: const Text("Cancel"))
-                                            ],
-                                          )
-                                  );break;
-                                }
-                             } ,
-                            )
+                              )
+                            ]
                           ),
                         );
                       }

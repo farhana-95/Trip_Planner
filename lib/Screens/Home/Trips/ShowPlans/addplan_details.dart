@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Home/Trips/show_plans.dart';
+import 'package:trip_planner/Screens/Home/Trips/ShowPlans/show_plans.dart';
 import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 

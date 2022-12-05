@@ -1,8 +1,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:trip_planner/Screens/Home/Trips/plan_history.dart';
+import 'package:trip_planner/Screens/Home/Trips/ShowPlans/plan_history.dart';
 import 'package:trip_planner/constants.dart';
 
 class TripHistory extends StatefulWidget {
@@ -13,8 +14,22 @@ class TripHistory extends StatefulWidget {
 }
 
 class _TripHistoryState extends State<TripHistory> {
-  final CollectionReference _trip =
-  FirebaseFirestore.instance.collection('trip');
+  late final CollectionReference _trip;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  getCurrentUser() {
+    final User? user = _auth.currentUser;
+    final uid = user!.uid;
+
+    return uid;
+  }
+  late String  Id;
+  @override
+  void initState() {
+    Id = getCurrentUser();
+    print("ID-   $Id");
+    _trip = FirebaseFirestore.instance.collection("trip").doc(Id).collection("trip");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -33,22 +48,32 @@ class _TripHistoryState extends State<TripHistory> {
                     itemBuilder: (context, index) {
                       final DocumentSnapshot documentSnapshot =
                       streamSnapshot.data!.docs[index];
-                      //DateTime dt1 = DateTime.parse(documentSnapshot['enddate']);
                       DateTime dt3 =DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
-                      //var t=DateFormat('dd-MM-yyyy').parse(documentSnapshot['enddate']);
                       if(dt3.isBefore(new DateTime.now())){
                         return GestureDetector(
                           child: Card(
                             margin: const EdgeInsets.all(10),
+                            elevation: 3,
                             child: ListTile(
                               leading: Image.asset("assets/images/baggage.png"),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text("Trip: ${documentSnapshot['tripname']}",
+                                  Text(" ${documentSnapshot['tripname']}",
                                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
                                   SizedBox(height: 7,),
-                                  Text("Location: ${documentSnapshot['location']} "),
+                                  Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        const WidgetSpan(
+                                          child: Icon(Icons.location_on_outlined,size: 18,),
+                                        ),
+                                        TextSpan(
+                                          text: '${documentSnapshot['location']}',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   SizedBox(height: 10,)
                                 ],
                               ),
@@ -64,7 +89,6 @@ class _TripHistoryState extends State<TripHistory> {
                                 ],
                               ),
                             ),
-                            elevation: 3,
                           ),
                           onTap: (){
                             Navigator.of(context).push(
@@ -74,7 +98,6 @@ class _TripHistoryState extends State<TripHistory> {
                                         'tripid'])));
                           },
                         );
-                        //print(documentSnapshot['tripname']);
                       }
                       return const SizedBox();
                     },

@@ -29,6 +29,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     // _userInfo;
     // print(_userInfo);
     return uemail;
+
   }
 
   @override
@@ -49,7 +50,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.active) {
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator()); // 👈 user is loading
               }
               final user = snapshot.data;
@@ -64,11 +65,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   builder: (BuildContext context,
                       AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.hasError) {
-                      return Text("Something went wrong");
+                      return const Text("Something went wrong");
                     }
 
                     if (snapshot.hasData && !snapshot.data!.exists) {
-                      return Text("Document does not exist");
+                      return const Text("Document does not exist");
                     }
 
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -77,21 +78,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       return Padding(
                         padding:  const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
                         child: Text("Name:  ${data['name']}",style: TextStyle(fontSize: 17),),
+
                       );
                     }
 
-                    return Text("loading");
+                    return const Text("loading");
                   },
                 );
               } else {
-                return Text("user is not logged in");
+                return const Text("user is not logged in");
               }
             },
           ),
         ),
-        Divider(
-          height: 2,
-        ),
+        const Divider(height: 2,),
         //mail
         Container(
           height: 80,
@@ -107,9 +107,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               )
 
         ),
-        Divider(
-          height: 2,
-        ),
+        const Divider(height: 2,),
         //phone
         Container(
           height: 80,
@@ -158,9 +156,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             },
           ),
         ),
-        Divider(
-          height: 2,
-        ),
+        const Divider(height: 2,),
 
       ]),
     );

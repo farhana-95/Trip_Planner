@@ -1,35 +1,56 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
-import 'package:trip_planner/Screens/Home/Trips/show_trip.dart';
 import 'package:trip_planner/Screens/Home/main_screen.dart';
 import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 
 class AddTrips extends StatefulWidget {
-  final String name,area;
+  final String? name,area,image;
    const AddTrips( {Key? key,
-     required this.name,required this.area}) : super(key: key);
+      this.name, this.area,this.image}) : super(key: key);
   @override
   State<AddTrips> createState() => _AddTripsState();
 }
 class _AddTripsState extends State<AddTrips> {
-  final CollectionReference _trip=
-  FirebaseFirestore.instance.collection('trip');
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  getCurrentUser() {
+    final User? user = _auth.currentUser;
+    final uid = user!.uid;
+    // Similarly we can get email as well
+    //final uemail = user.email;
+    //final uname = user.name;
+    //var text = Text('Mail: $uemail');
+    print(uid);
+    // _userInfo;
+    // print(_userInfo);
+    return uid;
+  }
+  late final CollectionReference _trip;
+
   final _location=TextEditingController();
   final _startdate=TextEditingController();
   final _enddate=TextEditingController();
   final _tripname=TextEditingController();
+  final  img= TextEditingController();
 
+late String  Id;
 
   @override
   void initState() {
     _tripname.clear();
     _location.clear();
-    _tripname.text = widget.name;
-    _location.text = widget.area;
-    // TODO: implement initState
+    img.text=widget.image!;
+    _tripname.text = widget.name!;
+    _location.text = widget.area!;
+    Id= getCurrentUser();
+    print("Iddd     $Id");
+    _trip = FirebaseFirestore.instance.
+    collection("trip").doc(Id).collection("trip");
     super.initState();
+
   }
 
 
@@ -161,21 +182,22 @@ class _AddTripsState extends State<AddTrips> {
                       "location": _location.text,
                       "startdate":_startdate.text,
                       "enddate": _enddate.text,
+                          "image": img.text,
                        };
                     _trip.add(data);
                         _tripname.text='';
                         _location.text='';
                         _startdate.text='';
                         _enddate.text='';
+                        img.text='';
 
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) => MainScreen()));
 
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
-                        setState(() {
 
-                        });
+                          print("IDD $Id");
                   }
               ),
             )

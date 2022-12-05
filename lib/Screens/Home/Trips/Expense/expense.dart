@@ -16,7 +16,6 @@ class Expense extends StatefulWidget {
 }
 
 class _ExpenseState extends State<Expense> {
-  static int tripId = 0 ;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

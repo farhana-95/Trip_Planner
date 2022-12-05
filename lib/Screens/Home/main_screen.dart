@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/place_list.dart';
@@ -8,19 +9,33 @@ import 'Profile/profile.dart';
 import 'Trips/Expense/Category/category_model.dart';
 import 'Trips/show_trip.dart';
 
-
-
 class MainScreen extends StatefulWidget {
    MainScreen({Key? key}) : super(key: key);
-
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
+
 class _MainScreenState extends State<MainScreen> {
   List<Cat> catList =  [];
   int currentIndex= 0;
+
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // getCurrentUser() {
+  //   final User? user = _auth.currentUser;
+  //   final uid = user!.uid;
+  //   // Similarly we can get email as well
+  //   //final uemail = user.email;
+  //   //final uname = user.name;
+  //   //var text = Text('Mail: $uemail');
+  //  //print(uid);
+  //   // _userInfo;
+  //   // print(_userInfo);
+  //   return uid;
+  // }
+  // static String  uId='';
+
   List<Widget> pages =  [
     Trip(),
     PlaceList(),
@@ -34,7 +49,14 @@ class _MainScreenState extends State<MainScreen> {
     ProfileAppbar(),
   ];
   @override
+  void initState() {
 
+    // uId= getCurrentUser();
+    // print("Iddd     $uId");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: currentIndex,
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.backpack, color: kPrimaryColor,),
+                icon: Icon(Icons.cases_rounded, color: kPrimaryColor,),
                 label: ''),
             BottomNavigationBarItem(
                 icon: Icon(Icons.search,color: kPrimaryColor ),
@@ -64,7 +86,6 @@ class _MainScreenState extends State<MainScreen> {
           onTap: (value) async{
             final prefs = await SharedPreferences.getInstance();
             prefs.setBool('isLoggedIn',false);
-
             setState(() {
               currentIndex =  value;
 
