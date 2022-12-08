@@ -42,9 +42,9 @@ late String  Id;
   void initState() {
     _tripname.clear();
     _location.clear();
-    img.text=widget.image!;
-    _tripname.text = widget.name!;
-    _location.text = widget.area!;
+    img.text=widget.image ?? "";
+    _tripname.text = widget.name ?? "";
+    _location.text = widget.area ?? "";
     Id= getCurrentUser();
     print("Iddd     $Id");
     _trip = FirebaseFirestore.instance.

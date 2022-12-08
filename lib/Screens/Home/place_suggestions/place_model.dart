@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/place_list.dart';
 
@@ -11,12 +9,20 @@ class PlaceModel {
   String? rate;
   String? time;
   String? attractions;
+  String? video;
 
-
-  PlaceModel({this.name, this.area, this.about, this.image, this.rate,this.time,this.attractions});
+  PlaceModel(
+      {this.name,
+      this.area,
+      this.about,
+      this.image,
+      this.rate,
+      this.time,
+      this.attractions,
+      this.video});
 
 //receiving data from server
-  factory PlaceModel.fromMap(map){
+  factory PlaceModel.fromMap(map) {
     return PlaceModel(
       name: map['name'],
       area: map['area'],
@@ -25,12 +31,20 @@ class PlaceModel {
       rate: map['rate'],
       time: map['time'],
       attractions: map['attractions'],
-
+      video: map['video'],
     );
   }
-  static fromJson(i) {
-    PlaceModel placeModel = PlaceModel(name: i["name"], area:  i["area"], about:  i["about"], image:  i["image"],rate: i["rate"],time: i["time"],attractions: i["attractions"]);
-    return placeModel;
 
+  static fromJson(i) {
+    PlaceModel placeModel = PlaceModel(
+        name: i["name"],
+        area: i["area"],
+        about: i["about"],
+        image: i["image"],
+        rate: i["rate"],
+        time: i["time"],
+        attractions: i["attractions"],
+      video: i['video'],);
+    return placeModel;
   }
 }

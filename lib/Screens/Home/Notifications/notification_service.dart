@@ -49,23 +49,23 @@ class NotificationService {
   Future<void> showNotifications() async {
     await flutterLocalNotificationsPlugin.show(
       0,
-      "Notification Title",
-      "This is the Notification Body!",
+      "Are You Ready?",
+      "You have an upcoming trip",
       NotificationDetails(android: _androidNotificationDetails),
     );
   }
 
-  Future<void> scheduleNotifications() async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        "Notification Title",
-        "This is the Notification Body!",
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-        NotificationDetails(android: _androidNotificationDetails),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime);
-  }
+  // Future<void> scheduleNotifications() async {
+  //   await flutterLocalNotificationsPlugin.zonedSchedule(
+  //       0,
+  //       "Notification Title",
+  //       "This is the Notification Body!",
+  //       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+  //       NotificationDetails(android: _androidNotificationDetails),
+  //       androidAllowWhileIdle: true,
+  //       uiLocalNotificationDateInterpretation:
+  //       UILocalNotificationDateInterpretation.absoluteTime);
+  // }
 
   Future<void> cancelNotifications(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);

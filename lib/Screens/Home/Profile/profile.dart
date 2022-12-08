@@ -33,9 +33,11 @@ class _profileState extends State<profile> {
     // print(_userInfo);
     return uid;
   }
+
   late final CollectionReference _rating;
   TextEditingController comments = TextEditingController();
-late double count=0;
+  late double count=0;
+
   @override
   void initState(){
     Id=getCurrentUser();
@@ -162,67 +164,67 @@ late double count=0;
               },
             ),
           ),
-          Divider(indent: 10,endIndent: 10,),
-          Container(
-            margin: EdgeInsets.only(left: 15),
-            height: 60,
-            width: 100,
-            child: GestureDetector(
-              child: ListTile(
-                  leading: Image.asset(
-                    "assets/images/img_9.png",
-                    height: 23,
-                    color: Colors.grey,
-                  ),
-                  title: const Text('Rate this app')),
-              onTap: () async {
-                  showDialog(context: context,
-                      builder: (BuildContext context)=>
-                          AlertDialog(
-                            title: const Text('Rate App'),
-                            content: Wrap(
-                              children: [
-                                buildRating(),
-                                SizedBox(height: 10),
-                                Padding(padding: EdgeInsets.all(5),
-                                  child: TextFormField(
-                                    controller: comments,
-                                    textInputAction: TextInputAction.done,
-                                    decoration: const InputDecoration(
-                                      border: UnderlineInputBorder(),
-                                      labelText: 'Comments ',
-                                      labelStyle: TextStyle(
-                                        color: Colors.black,
-                                        //fontWeight: FontWeight.bold
-                                      ),
-                                      hintText: 'Add Comment',
-                                    ),
-                                  ),
-
-                                )
-                              ],
-                            ),
-                            actions: [
-                              TextButton(onPressed: ()=>Navigator.pop(context),
-                                  child: Text('Cancel')),
-                              TextButton(onPressed: (){
-                                //count = rate.text as double;
-                                Map<String,dynamic> data={
-                                  'rate': count,
-                                  'comment': comments.text,
-                                };
-                                print("DB   $count");
-                                _rating.add(data);
-                                comments.text='';
-                               Navigator.pop(context);
-                              },
-                                  child: Text('Submit')),
-                            ],
-                          )
-                  );
-              },
-            ),
-          ),
+          // Divider(indent: 10,endIndent: 10,),
+          // Container(
+          //   margin: EdgeInsets.only(left: 15),
+          //   height: 60,
+          //   width: 100,
+          //   child: GestureDetector(
+          //     child: ListTile(
+          //         leading: Image.asset(
+          //           "assets/images/img_9.png",
+          //           height: 23,
+          //           color: Colors.grey,
+          //         ),
+          //         title: const Text('Rate this app')),
+          //     onTap: () async {
+          //         showDialog(context: context,
+          //             builder: (BuildContext context)=>
+          //                 AlertDialog(
+          //                   title: const Text('Rate App'),
+          //                   content: Wrap(
+          //                     children: [
+          //                       buildRating(),
+          //                       SizedBox(height: 10),
+          //                       Padding(padding: EdgeInsets.all(5),
+          //                         child: TextFormField(
+          //                           controller: comments,
+          //                           textInputAction: TextInputAction.done,
+          //                           decoration: const InputDecoration(
+          //                             border: UnderlineInputBorder(),
+          //                             labelText: 'Comments ',
+          //                             labelStyle: TextStyle(
+          //                               color: Colors.black,
+          //                               //fontWeight: FontWeight.bold
+          //                             ),
+          //                             hintText: 'Add Comment',
+          //                           ),
+          //                         ),
+          //
+          //                       )
+          //                     ],
+          //                   ),
+          //                   actions: [
+          //                     TextButton(onPressed: ()=>Navigator.pop(context),
+          //                         child: Text('Cancel')),
+          //                     TextButton(onPressed: (){
+          //                       //count = rate.text as double;
+          //                       Map<String,dynamic> data={
+          //                         'rate': count,
+          //                         'comment': comments.text,
+          //                       };
+          //                       print("DB   $count");
+          //                       _rating.add(data);
+          //                       comments.text='';
+          //                      Navigator.pop(context);
+          //                     },
+          //                         child: Text('Submit')),
+          //                   ],
+          //                 )
+          //         );
+          //     },
+          //   ),
+          // ),
           //logout
           Divider(indent: 10,endIndent: 10,),
           Container(
@@ -236,7 +238,7 @@ late double count=0;
                     height: 23,
                     color: Colors.grey,
                   ),
-                  title: Text('Log Out')),
+                  title: const Text('Log Out')),
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.remove('email');
@@ -252,24 +254,24 @@ late double count=0;
       ),
     );
   }
-  Widget buildRating()=>
-      RatingBar.builder(
-        initialRating: count,
-        minRating: 1,
-        direction: Axis.horizontal,
-        allowHalfRating: true,
-        itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
-        itemBuilder: (BuildContext context, _)=>const Icon(
-          Icons.star,
-          color: Colors.amber,
-        ),
-        onRatingUpdate: (rating) {
-          setState(() {
-            count= rating;
-          });
-          print('rating:  $count');
-        },updateOnDrag: true,
-
-      );
+  // Widget buildRating()=>
+  //     RatingBar.builder(
+  //       initialRating: count,
+  //       minRating: 1,
+  //       direction: Axis.horizontal,
+  //       allowHalfRating: true,
+  //       itemCount: 5,
+  //       itemPadding: EdgeInsets.symmetric(horizontal: 5.0),
+  //       itemBuilder: (BuildContext context, _)=>const Icon(
+  //         Icons.star,
+  //         color: Colors.amber,
+  //       ),
+  //       onRatingUpdate: (rating) {
+  //         setState(() {
+  //           count= rating;
+  //         });
+  //         print('rating:  $count');
+  //       },updateOnDrag: true,
+  //
+  //     );
 }
