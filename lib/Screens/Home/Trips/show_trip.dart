@@ -225,17 +225,26 @@ class _TripState extends State<Trip> {
                           .parse(documentSnapshot['enddate']);
                       if (dt2.isAfter(new DateTime.now())) {
                         return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              //set border radius more than 50% of height and width to make circle
+                            ),
                           margin: const EdgeInsets.all(10),
                           elevation: 3,
                           child: Row(children: <Widget>[
                             Container(
                                 margin: EdgeInsets.only(right: 8),
                                 width: 120,
-                                height: 130,
-                                child: Image.network(
-                                  '${documentSnapshot['image']}',
-                                  fit: BoxFit.cover,
-                                )
+                                height:MediaQuery.of(context).size.height/5.8
+                              ,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                                  child: Image.network(
+                                    '${documentSnapshot['image']}',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+
                                 //Image.asset("assets/images/trip.png",fit: BoxFit.cover,),
                                 ),
                             Column(

@@ -1,7 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Home/place_suggestions/resort2.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/Mynensingh.dart';
 
 class Resort extends StatefulWidget {
   const Resort({Key? key,}) : super(key: key);
@@ -219,7 +219,7 @@ class _ResortState extends State<Resort> {
                                   ),
                                   onTap: (){
                                     Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => Resort2(id: documentSnapshot.id)));
+                                      builder: (context) => mymensingh_resorts(id: documentSnapshot.id)));
                                     print("RESORT ID = ${documentSnapshot.id}");
                                   }
 

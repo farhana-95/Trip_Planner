@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/sylhet_resorts.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Restaurants/sylhet_restaurants.dart';
 
 import '../../../constants.dart';
 import '../Trips/add_trips.dart';
@@ -183,6 +185,52 @@ class _SylhetState extends State<Sylhet> {
                                   // ),
                                   const SizedBox(
                                     height: 10,
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 8,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xE7B578EF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Resorts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => sylhet_resorts(id: documentSnapshot.id)));
+                                            print("RESORT ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                      SizedBox(width: 12,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0x8D319BFF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Restaurants',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => SylhetRestaurants(id: documentSnapshot.id)));
+                                            print("REST ID = ${documentSnapshot.id}");
+                                          }
+                                      ),
+                                    ],
                                   ),
                                   Container(
                                       margin:

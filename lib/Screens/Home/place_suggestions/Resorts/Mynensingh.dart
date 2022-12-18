@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Resort2 extends StatefulWidget {
+class mymensingh_resorts extends StatefulWidget {
   final id;
-  const Resort2({Key? key,this.id}) : super(key: key);
+  const mymensingh_resorts({Key? key,this.id}) : super(key: key);
 
   @override
-  State<Resort2> createState() => _Resort2State();
+  State<mymensingh_resorts> createState() => _mymensingh_resortsState();
 }
 
-class _Resort2State extends State<Resort2> {
-  late final CollectionReference _resort;
+class _mymensingh_resortsState extends State<mymensingh_resorts> {
 @override
   void initState(){
     super.initState();
@@ -28,7 +27,7 @@ class _Resort2State extends State<Resort2> {
       body: Column(
         children: [
           Expanded(child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('places').doc(this.widget.id).collection('resort').snapshots(),
+            stream: FirebaseFirestore.instance.collection('mymensingh').doc(this.widget.id).collection('resort').snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
               if (streamSnapshot.hasData) {
                 return ListView.builder(

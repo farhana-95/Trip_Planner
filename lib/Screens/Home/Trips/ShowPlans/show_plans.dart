@@ -42,18 +42,17 @@ class _ShowPlansState extends State<ShowPlans> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    alignment: Alignment.centerRight,
-                    image: AssetImage("assets/images/check.png")
+                      fit: BoxFit.fill,
+                    alignment: Alignment.center,
+
+                    image: AssetImage("assets/images/events.jpg")
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 margin: EdgeInsets.only(left: 18, right: 18, top: 18),
                 height: 120,
                 width: 350,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 53,left: 15,),
-                  child: Text("Activities/\nEvents",style: TextStyle(color: kPrimaryColor,fontSize: 17,),),
-                ),
+                child: Center(child: Text("Activities/\nEvents",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShowActivity(tripid: widget.tripid))),
@@ -63,18 +62,16 @@ class _ShowPlansState extends State<ShowPlans> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      alignment: Alignment.centerLeft,
-                      image: AssetImage("assets/images/trans.png")
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: AssetImage("assets/images/tsport.jpg")
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 margin: const EdgeInsets.only(left: 18, right: 18, top: 15),
                 height: 120,
                 width: 350,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 53,left: 257,),
-                  child: Text("Transports",style: TextStyle(color: kPrimaryColor,fontSize: 17)),
-                ),
+                child: Center(child: Text("Transports",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold))),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShowTransport(tripid: widget.tripid))),
@@ -84,18 +81,16 @@ class _ShowPlansState extends State<ShowPlans> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      alignment: Alignment.centerRight,
-                      image: AssetImage("assets/images/food.png")
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: AssetImage("assets/images/res.jpg")
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 margin: EdgeInsets.only(left: 18, right: 18, top: 15),
                 height: 120,
                 width: 350,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 53,left: 20),
-                  child: Text("Restaurants",style: TextStyle(color:kPrimaryColor,fontSize: 17)),
-                ),
+                child: Center(child: Text("Restaurants/Meals",style: TextStyle(color:Colors.white,fontSize: 20,fontWeight: FontWeight.bold))),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShowRestaurant(tripid: widget.tripid))),
@@ -105,18 +100,16 @@ class _ShowPlansState extends State<ShowPlans> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      alignment: Alignment.centerLeft,
-                      image: AssetImage("assets/images/acm.png")
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: AssetImage("assets/images/hotels.jpg")
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 margin: EdgeInsets.only(left: 18, right: 18, top: 15),
                 height: 120,
                 width: 350,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 190,top: 53),
-                  child: Text("Accommodations",style: TextStyle(color: kPrimaryColor,fontSize: 18)),
-                ),
+                child: Center(child: Text("Accommodations",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold))),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
@@ -127,17 +120,16 @@ class _ShowPlansState extends State<ShowPlans> {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/notes.png")
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      image: AssetImage("assets/images/note.jpg")
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 margin: const EdgeInsets.only(left: 18, right: 18, top: 15),
                 height: 120,
                 width: 350,
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 53,left: 10),
-                  child: Text("Notes",style: TextStyle(color:kPrimaryColor,fontSize: 18)),
-                ),
+                child: Center(child: Text("Notes",style: TextStyle(color:Colors.white,fontSize: 20,fontWeight: FontWeight.bold))),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShowNotes(tripid: widget.tripid))),

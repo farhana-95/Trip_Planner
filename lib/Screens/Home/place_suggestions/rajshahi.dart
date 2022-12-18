@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/Mynensingh.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/rajshahi_resorts.dart';
+import 'package:trip_planner/Screens/Home/place_suggestions/Restaurants/rajshahi_restaurants.dart';
 
 import '../../../constants.dart';
 import '../Trips/add_trips.dart';
@@ -181,8 +184,121 @@ class _RajshahiState extends State<Rajshahi> {
                                   //       wordSpacing: 5,
                                   //       color: Color(0xFF595858)),
                                   // ),
+                                  Container(
+                                      margin:
+                                      const EdgeInsets.only(top: 15),
+                                      child: const Text(
+                                        "To Do:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  const Divider(
+                                    height: 30,
+                                    indent: 1,
+                                    endIndent: 300,
+                                    thickness: 1.5,
+                                    color: Colors.teal,
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 8,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xE7B578EF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Resorts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => mymensingh_resorts(id: documentSnapshot.id)));
+                                            print("RESORT ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                      SizedBox(width: 12,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0x8D319BFF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Restaurants',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => mymensingh_resorts(id: documentSnapshot.id)));
+                                            print("RESORT ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: 10,
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 8,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xE7B578EF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Resorts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => rajshahi_resorts(id: documentSnapshot.id)));
+                                            print("RESORT ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                      SizedBox(width: 12,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0x8D319BFF),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Restaurants',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => RajshahiRestaurants(id: documentSnapshot.id)));
+                                            print("REST ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                    ],
                                   ),
                                   Container(
                                       margin:
@@ -206,6 +322,7 @@ class _RajshahiState extends State<Rajshahi> {
                                         wordSpacing: 5,
                                         color: Color(0xFF595858)),
                                   ),
+
 
                                   Container(
                                     margin: const EdgeInsets.only(
