@@ -110,6 +110,7 @@ class _ShowTransportState extends State<ShowTransport> {
                       transtype.text = '';
                       transdate.text = '';
                       transtime.text = '';
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -117,7 +118,9 @@ class _ShowTransportState extends State<ShowTransport> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: const Text('Delete Transport'),
-                    onPressed: () => _deleteTransport(documentSnapshot!.id),
+                    onPressed: () { _deleteTransport(documentSnapshot!.id);
+                    Navigator.of(context).pop();
+                    }
                   ),
                 ),
               ],

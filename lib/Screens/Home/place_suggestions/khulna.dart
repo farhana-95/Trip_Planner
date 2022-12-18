@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../Trips/add_trips.dart';
 
 class Khulna extends StatefulWidget {
   const Khulna({Key? key}) : super(key: key);
@@ -210,14 +211,14 @@ class _KhulnaState extends State<Khulna> {
                                         left: 216, right: 9, top: 10),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //     builder: (context) => AddTrips(
-                                        //         name:
-                                        //         "${_placeData[i].name}",
-                                        //         area:
-                                        //         "${_placeData[i].area}",
-                                        //         image:
-                                        //         "${_placeData[i].image}")));
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => AddTrips(
+                                                name:
+                                                "${documentSnapshot['name']}",
+                                                area:
+                                                "${documentSnapshot['area']}",
+                                                image:
+                                                "${documentSnapshot['image']}")));
                                       },
                                       child: Row(
                                         children: const [

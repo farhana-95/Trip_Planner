@@ -127,6 +127,7 @@ class _ShowRestaurantState extends State<ShowRestaurant> {
                       resadd.text = '';
                       restdate.text = '';
                       restime.text = '';
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -134,7 +135,9 @@ class _ShowRestaurantState extends State<ShowRestaurant> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: const Text('Delete Restaurant'),
-                    onPressed: () => _deleteRestaurant(documentSnapshot!.id),
+                    onPressed: () { _deleteRestaurant(documentSnapshot!.id);
+                    Navigator.of(context).pop();
+                    }
                   ),
                 ),
               ],

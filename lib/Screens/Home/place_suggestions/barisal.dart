@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/constants.dart';
 
+import '../Trips/add_trips.dart';
+
 class Barisal extends StatefulWidget {
   const Barisal({Key? key}) : super(key: key);
 
@@ -209,14 +211,14 @@ class _BarisalState extends State<Barisal> {
                                         left: 216, right: 9, top: 10),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        // Navigator.of(context).push(MaterialPageRoute(
-                                        //     builder: (context) => AddTrips(
-                                        //         name:
-                                        //         "${_placeData[i].name}",
-                                        //         area:
-                                        //         "${_placeData[i].area}",
-                                        //         image:
-                                        //         "${_placeData[i].image}")));
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => AddTrips(
+                                                name:
+                                                "${documentSnapshot['name']}",
+                                                area:
+                                                "${documentSnapshot['area']}",
+                                                image:
+                                                "${documentSnapshot['image']}")));
                                       },
                                       child: Row(
                                         children: const [

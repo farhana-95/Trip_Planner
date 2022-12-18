@@ -107,6 +107,7 @@ class _ShowNotesState extends State<ShowNotes> {
                       details.text = '';
                       date.text = '';
                       time.text = '';
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -114,7 +115,9 @@ class _ShowNotesState extends State<ShowNotes> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: const Text('Delete Note'),
-                    onPressed: () => _deleteNote(documentSnapshot!.id),
+                    onPressed: () { _deleteNote(documentSnapshot!.id);
+                    Navigator.of(context).pop();
+                    }
                   ),
                 ),
               ],

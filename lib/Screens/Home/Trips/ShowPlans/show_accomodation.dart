@@ -131,6 +131,7 @@ class _ShowAccommodationState extends State<ShowAccommodation> {
                       acmadd.text = '';
                       acmin.text = '';
                       acmout.text = '';
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -138,7 +139,9 @@ class _ShowAccommodationState extends State<ShowAccommodation> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: const Text('Delete Accomodation'),
-                    onPressed: () => _deleteAcmd(documentSnapshot!.id),
+                    onPressed: () { _deleteAcmd(documentSnapshot!.id);
+                    Navigator.of(context).pop();
+                    }
                   ),
                 ),
               ],

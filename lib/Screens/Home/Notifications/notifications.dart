@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:trip_planner/Screens/Home/place_suggestions/resort.dart';
 import 'LocalDB/Localdb.dart';
 import 'Model/NotificationListModel.dart';
 import 'alarm_manager/alarm_manager.dart';

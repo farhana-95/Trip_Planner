@@ -125,6 +125,7 @@ class _ShowActivityState extends State<ShowActivity> {
                       activitynote.text = '';
                       actdate.text = '';
                       acttime.text = '';
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -132,7 +133,10 @@ class _ShowActivityState extends State<ShowActivity> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     child: const Text('Delete Activity'),
-                    onPressed: () => _deleteActivity(documentSnapshot!.id),
+                    onPressed: () { _deleteActivity(documentSnapshot!.id);
+                    Navigator.of(context).pop();
+                      },
+
                   ),
                 ),
               ],
