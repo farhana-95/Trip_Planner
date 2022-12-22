@@ -29,7 +29,6 @@ class _AddTripsState extends State<AddTrips> {
     return uid;
   }
   late final CollectionReference _trip;
-
   final _location=TextEditingController();
   final _startdate=TextEditingController();
   final _enddate=TextEditingController();
@@ -197,7 +196,7 @@ late String  Id;
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
 
-                          print("IDD $Id");
+                          // print("IDD $Id");
                   }
               ),
             )

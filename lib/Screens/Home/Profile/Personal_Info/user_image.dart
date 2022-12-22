@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,33 +13,55 @@ class UserImage extends StatefulWidget {
   State<UserImage> createState() => _UserImageState();
 }
 
-Future<String> uploadPic(FirebaseStorage storage, File imageTemporary) async {
-  //Get the file from the image picker and store it
-  // File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-  //Create a reference to the location you want to upload to in firebase
-  Reference reference = storage.ref().child("images/");
-
-  //Upload the file to firebase
-  UploadTask uploadTask = reference.putFile(imageTemporary!);
-
-  // Waits till the file is uploaded then stores the download url
-  //Uri location = (await uploadTask).storage;
-  TaskSnapshot snapshot = await uploadTask;
-  String imageUrl = await snapshot.ref.getDownloadURL();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString('userimage', imageUrl);
-  //returns the download url
-  return imageUrl;
-}
 
 class _UserImageState extends State<UserImage> {
+  Future<String> uploadPic(FirebaseStorage storage, File imageTemporary) async {
+    //Get the file from the image picker and store it
+    // File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    String imageID= getCurrentUser();
+    //Create a reference to the location you want to upload to in firebase
+    Reference reference = storage.ref().child("images").child(imageID+"/");
+    print("imageID:   $imageID");
+
+    //Upload the file to firebase
+    UploadTask uploadTask = reference.putFile(imageTemporary);
+
+    // Waits till the file is uploaded then stores the download url
+    //Uri location = (await uploadTask).storage;
+    TaskSnapshot snapshot = await uploadTask;
+    String imageUrl = await snapshot.ref.getDownloadURL();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userimage', imageUrl);
+    //returns the download url
+    return imageUrl;
+  }
+
   String networkImageURL = '';
+  String networkURL ='';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  var userData =
+  FirebaseFirestore.instance.collection("/userdata").doc("uid").get();
+
+  getCurrentUser() {
+    final User? user = _auth.currentUser;
+    final uid = user!.uid;
+    // Similarly we can get email as well
+    final uemail = user.email;
+    //final uname = user.name;
+    //var text = Text('Mail: $uemail');
+    print("EMAIL: $uemail");
+    // _userInfo;
+    // print(_userInfo);
+    return uemail;
+
+  }
 
   @override
   void initState() {
     super.initState();
     _loadImageURl();
+    // URL= URl();
+
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -60,12 +84,23 @@ class _UserImageState extends State<UserImage> {
     setState(() {
       networkImageURL = (prefs.getString('userimage') ?? '');
       print("network imageUrl  $networkImageURL");
+      // networkURL = networkImageURL;
     });
   }
 
+  // Future<void> removeImageFromUrl(String url) async {
+  //   try {
+  //     url = networkURL;
+  //     Reference ref = await FirebaseStorage.instance.refFromURL(url);
+  //     await ref.delete();
+  //   } catch (e) {
+  //     print('Failed with error code: ');
+  //     print('');
+  //   }
+  // }
   Widget bottomSheet() {
     return Container(
-      height: 100.0,
+      height: MediaQuery.of(context).size.height*0.2,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
@@ -77,7 +112,7 @@ class _UserImageState extends State<UserImage> {
           SizedBox(
             height: 20,
           ),
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               /*TextButton.icon(
@@ -98,6 +133,20 @@ class _UserImageState extends State<UserImage> {
                   Icons.photo_library,
                 ),
                 label: Text('Gallery'),
+              ),
+              TextButton.icon(
+                onPressed: () async {
+                  // print("URL : $networkURL");
+                   // FirebaseStorage.instance.refFromURL('$networkURL').delete();
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString('userimage', "");
+
+
+                },
+                icon: Icon(
+                  Icons.delete,
+                ),
+                label: Text('Delete Photo'),
               )
             ],
           )
@@ -121,14 +170,14 @@ class _UserImageState extends State<UserImage> {
             CircleAvatar(
               radius: 60.0,
               backgroundImage: NetworkImage(networkImageURL),
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.teal,
             )
           ],
           Positioned(
             bottom: 20.0,
             right: 20.0,
             child: InkWell(
-              child: Icon(Icons.camera_alt),
+              child: Icon(Icons.camera_alt,color: Colors.grey,),
               onTap: () {
                 showModalBottomSheet(
                     context: context, builder: ((builder) => bottomSheet()));
