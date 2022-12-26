@@ -1,15 +1,15 @@
 
 class ExpenseModel {
-  double amount = 0.0;
+  double amount = 0;
   String expenseCat = "";
-  String? date = "";
+  String date;
 
-  ExpenseModel({required this.amount,required this.expenseCat,this.date});
+  ExpenseModel({required this.amount,required this.expenseCat,required this.date});
 
   //receiving data from server
   factory ExpenseModel.fromMap(map){
     return ExpenseModel(
-      amount: map['amount'],
+      amount: map['amount'] ,
       expenseCat: map['expenseCat'],
       date: map['date'],
 
@@ -24,7 +24,7 @@ class ExpenseModel {
     };
   }
   static fromJson(i) {
-    ExpenseModel expenseModel = ExpenseModel(amount: i["amount"] ?? 0,expenseCat: i["expenseCat"],date: i["date"]);
+    ExpenseModel expenseModel = ExpenseModel(amount: i["amount"] ?? 0, expenseCat: i["expenseCat"] , date: i["date"]);
     return expenseModel;
 
   }

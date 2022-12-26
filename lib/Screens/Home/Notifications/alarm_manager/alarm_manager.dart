@@ -15,13 +15,14 @@ class SetAlarm {
   final int _oneShotAtTaskId = 2;
   final int _periodicTaskId = 3;
 
+
   static void _oneShotTaskCallback() {
     print("One Shot Task Running");
   }
 
   static void _oneShotAtTaskCallback() {
     print("One Shot At Task Running");
-    notificationService.showNotifications();
+    notificationService.showNotifications('', '');
   }
    void cancelAlarm(){
     AndroidAlarmManager.cancel(_oneShotAtTaskId);
@@ -33,7 +34,7 @@ class SetAlarm {
    scheduleOneShotAlarm(String dateTime, bool isTimed) async {
      print("dateTime $dateTime");
 
-     DateTime now = DateFormat('dd-MM-yyyy HH:mm a').parse(dateTime);
+     DateTime now = DateFormat('dd-MM-yyyy hh:mm a').parse(dateTime);
      print("dateTime $now");
     if (isTimed) {
       //DateTime chosenDate = await _chooseDate("");
@@ -48,7 +49,7 @@ class SetAlarm {
     await AndroidAlarmManager.periodic(duration, _periodicTaskId, _periodicTaskCallback);
   }
   Future<Duration> _chooseDuration() async {
-    String duration = "60";
+    String duration = "10";
     String durationString = durationSeconds;
 
     if (duration != null) {

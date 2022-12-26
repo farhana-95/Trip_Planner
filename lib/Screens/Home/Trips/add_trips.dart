@@ -141,22 +141,23 @@ late String  Id;
                   textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'End Date ',
+                    labelText: 'End Date & Time ',
                     labelStyle: TextStyle(
                       fontSize: 17,
                       color: Colors.black,
                     ),
-                    hintText: 'Enter Date',
+                    hintText: 'Enter Date & Time',
                   ),
                   onTap: ()async{
                     DateTime? pickeddate = await showDatePicker(context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2101));
-                    if(pickeddate != null)
+                    TimeOfDay? tpm = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+                    if(pickeddate != null && tpm != null)
                     {
                       setState(() {
-                        _enddate.text= DateFormat('dd-MM-yyyy').format(pickeddate);
+                        _enddate.text= DateFormat('dd-MM-yyyy').format(pickeddate)+ " ${tpm.format(context)}";
                       });
                     }
 

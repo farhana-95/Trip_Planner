@@ -21,21 +21,6 @@ class _MainScreenState extends State<MainScreen> {
   List<Cat> catList =  [];
   int currentIndex= 0;
 
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // getCurrentUser() {
-  //   final User? user = _auth.currentUser;
-  //   final uid = user!.uid;
-  //   // Similarly we can get email as well
-  //   //final uemail = user.email;
-  //   //final uname = user.name;
-  //   //var text = Text('Mail: $uemail');
-  //  //print(uid);
-  //   // _userInfo;
-  //   // print(_userInfo);
-  //   return uid;
-  // }
-  // static String  uId='';
-
   List<Widget> pages =  [
     Trip(),
     PlaceList(),
@@ -60,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  pageAppbar[currentIndex],//Text("Home Page"),
+        title:  Center(child: pageAppbar[currentIndex]),//Text("Home Page"),
         backgroundColor: kPrimaryColor,
         automaticallyImplyLeading: false,
       ),

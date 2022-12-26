@@ -57,6 +57,10 @@ dependencies:
   flutter_local_notifications: ^12.0.3
   workmanager: ^0.5.1
   build_runner: ^2.3.2
+  cached_network_image: ^3.2.3
+  pdf: ^3.8.4
+  open_file: ^3.2.1
+  printing: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +96,7 @@ flutter:
     - assets/images/baggage.png
     - assets/images/history.png
     - assets/images/
+    - assets/fonts/OpenSans-Regular.ttf
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

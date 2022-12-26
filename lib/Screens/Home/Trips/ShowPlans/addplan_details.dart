@@ -5,8 +5,8 @@ import 'package:trip_planner/constants.dart';
 import 'package:intl/intl.dart';
 
 class PlanDetails extends StatefulWidget {
-  final int tripid;
-  const PlanDetails( {Key? key, required this.tripid}) : super(key: key);
+  final int? tripid;
+  const PlanDetails( {Key? key,  this.tripid }) : super(key: key);
   @override
   State<PlanDetails> createState() => _PlanDetailsState();
 }
@@ -21,19 +21,20 @@ class _PlanDetailsState extends State<PlanDetails> {
 
   @override
   void initState() {
-    tripId = widget.tripid;
+    tripId = widget.tripid ?? 0;
     _activityplan = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("activityplan");
     _transport = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("transport");
     _restaurant = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("restaurant");
     _accomodation = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("accomodation");
     _addnotes = FirebaseFirestore.instance.collection("trip").doc("$tripId").collection("addnotes");
+
   }
   int _activeCurrentStep = 0;
   final activitytitile = TextEditingController();
   final activitynote = TextEditingController();
   final acttime = TextEditingController();
   final actdate = TextEditingController();
-  final transtype = TextEditingController();
+   final transtype = TextEditingController();
   final transdate = TextEditingController();
   final transtime = TextEditingController();
   final restname = TextEditingController();
@@ -47,6 +48,8 @@ class _PlanDetailsState extends State<PlanDetails> {
   final details = TextEditingController();
   final time = TextEditingController();
   final date = TextEditingController();
+  static List<String>type = ['Select Type', 'Bus','Plane','Others'];
+   String  tType ='Select Type ';
   List<Step> stepList() => [
     Step(title: Text('Activities'),
         content: Container(

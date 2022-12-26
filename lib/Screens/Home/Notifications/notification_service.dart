@@ -1,7 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter/material.dart';
 
 class NotificationService {
   //NotificationService a singleton object
@@ -46,26 +45,26 @@ class NotificationService {
     importance: Importance.high,
   );
 
-  Future<void> showNotifications() async {
+  Future<void> showNotifications(String? name , String? date) async {
     await flutterLocalNotificationsPlugin.show(
       0,
       "Are You Ready?",
-      "You have an upcoming trip",
+      "You have upcoming trip '${name}' in '${date}'",
       NotificationDetails(android: _androidNotificationDetails),
     );
   }
 
-  // Future<void> scheduleNotifications() async {
-  //   await flutterLocalNotificationsPlugin.zonedSchedule(
-  //       0,
-  //       "Notification Title",
-  //       "This is the Notification Body!",
-  //       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-  //       NotificationDetails(android: _androidNotificationDetails),
-  //       androidAllowWhileIdle: true,
-  //       uiLocalNotificationDateInterpretation:
-  //       UILocalNotificationDateInterpretation.absoluteTime);
-  // }
+  Future<void> scheduleNotifications() async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        "Notification Title",
+        "This is the Notification Body!",
+        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        NotificationDetails(android: _androidNotificationDetails),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime);
+  }
 
   Future<void> cancelNotifications(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);

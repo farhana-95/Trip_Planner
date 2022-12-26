@@ -6,6 +6,7 @@ import 'package:trip_planner/Screens/Home/place_suggestions/Restaurants/barisal_
 import 'package:trip_planner/constants.dart';
 
 import '../Trips/add_trips.dart';
+import 'Restaurants/Mymensingh_restaurants.dart';
 
 class Barisal extends StatefulWidget {
   const Barisal({Key? key}) : super(key: key);
@@ -187,6 +188,29 @@ class _BarisalState extends State<Barisal> {
                                     height: 10,
                                   ),
                                   SizedBox(height: 10,),
+                                  Container(
+                                      margin:
+                                      const EdgeInsets.only(top: 15),
+                                      child: const Text(
+                                        "Tourist Time:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  const Divider(
+                                    height: 30,
+                                    indent: 1,
+                                    endIndent: 265,
+                                    thickness: 1.5,
+                                    color: Colors.blue,
+                                  ),
+                                  Text(
+                                    ' ${documentSnapshot['time']}',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        wordSpacing: 5,
+                                        color: Color(0xFF595858)),
+                                  ),
+                                  SizedBox(height: 10,),
                                   Row(
                                     children: [
                                       SizedBox(width: 8,),
@@ -235,28 +259,8 @@ class _BarisalState extends State<Barisal> {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                      margin:
-                                      const EdgeInsets.only(top: 15),
-                                      child: const Text(
-                                        "Tourist Time:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  const Divider(
-                                    height: 30,
-                                    indent: 1,
-                                    endIndent: 265,
-                                    thickness: 1.5,
-                                    color: Colors.blue,
-                                  ),
-                                  Text(
-                                    ' ${documentSnapshot['time']}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        wordSpacing: 5,
-                                        color: Color(0xFF595858)),
-                                  ),
+                                  SizedBox(height: 15,),
+
 
                                   Container(
                                     margin: const EdgeInsets.only(

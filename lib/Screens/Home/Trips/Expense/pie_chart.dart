@@ -16,10 +16,8 @@ class AllExpensePieChart extends StatefulWidget {
 
 class _AllExpensePieChartState extends State<AllExpensePieChart> {
 
-  double totalIncome = 0;
   double totalExpense = 0;
-  double balance = 0;
-  ExpenseIncomeService expenseIncomeService = ExpenseIncomeService();
+  ExpenseService expenseIncomeService = ExpenseService();
    List<ExpenseModel> expenseList = [];
 
   int key=0;
@@ -53,7 +51,6 @@ class _AllExpensePieChartState extends State<AllExpensePieChart> {
   Map<String, double> getCategoryData(){
     Map<String,double>catMap={};
     for(var item in expenseList){
-      //  print("catMap cat ${item.category}:${item.expense}");
       if(catMap.containsKey(item.expenseCat)==false){
         catMap[item.expenseCat.toString()] = item.amount;
       }
@@ -62,7 +59,6 @@ class _AllExpensePieChartState extends State<AllExpensePieChart> {
         if(catMap.containsKey(item.expenseCat)){
           double beforeValue = catMap[item.expenseCat] ?? 0;
           sum = beforeValue + item.amount;
-          // print("catMap sum ${item.category}  $beforeValue ${catMap[item.category] ?? 0}    ${double.parse(item.expense ?? "0")}   $sum");
           catMap.update(item.expenseCat.toString(), (double) => sum);
         }
       }

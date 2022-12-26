@@ -56,7 +56,7 @@ class _NotificationAlertState extends State<NotificationAlert> {
         ListView.builder(
             itemCount: _someAsyncData.length,
             itemBuilder: (BuildContext context, int i) {
-             DateTime dt3 =DateFormat('dd-MM-yyyy').parse(_someAsyncData[i].startdate);
+             DateTime dt3 =DateFormat('dd-MM-yyyy HH:mm a').parse(_someAsyncData[i].startdate);
 
              return  dt3.isBefore(DateTime.now())?
              const SizedBox()

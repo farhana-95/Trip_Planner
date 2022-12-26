@@ -15,6 +15,7 @@ class UserImage extends StatefulWidget {
 
 
 class _UserImageState extends State<UserImage> {
+   String imageUrl='';
   Future<String> uploadPic(FirebaseStorage storage, File imageTemporary) async {
     //Get the file from the image picker and store it
     // File image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -22,22 +23,30 @@ class _UserImageState extends State<UserImage> {
     //Create a reference to the location you want to upload to in firebase
     Reference reference = storage.ref().child("images").child(imageID+"/");
     print("imageID:   $imageID");
-
-    //Upload the file to firebase
     UploadTask uploadTask = reference.putFile(imageTemporary);
 
     // Waits till the file is uploaded then stores the download url
     //Uri location = (await uploadTask).storage;
     TaskSnapshot snapshot = await uploadTask;
-    String imageUrl = await snapshot.ref.getDownloadURL();
+     imageUrl = await snapshot.ref.getDownloadURL();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userimage', imageUrl);
     //returns the download url
+    print('IMAGEURL  $imageUrl');
+
     return imageUrl;
   }
+    printUrl() async {
+      String imageID= getCurrentUser();
+     Reference ref = FirebaseStorage.instance.ref().child("images/$imageID");
+     String url = (await ref.getDownloadURL()).toString();
+     print("printUrl  $url");
 
+     return url;
+   }
   String networkImageURL = '';
-  String networkURL ='';
+  // String networkURL ='';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   var userData =
   FirebaseFirestore.instance.collection("/userdata").doc("uid").get();
@@ -45,7 +54,6 @@ class _UserImageState extends State<UserImage> {
   getCurrentUser() {
     final User? user = _auth.currentUser;
     final uid = user!.uid;
-    // Similarly we can get email as well
     final uemail = user.email;
     //final uname = user.name;
     //var text = Text('Mail: $uemail');
@@ -55,14 +63,7 @@ class _UserImageState extends State<UserImage> {
     return uemail;
 
   }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadImageURl();
-    // URL= URl();
-
-  }
+static late var imgUrl;
 
   FirebaseStorage storage = FirebaseStorage.instance;
   File? image;
@@ -80,14 +81,24 @@ class _UserImageState extends State<UserImage> {
   }
 
   _loadImageURl() async {
+    // print('imgURL $imgUrl');
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
+    setState(()  {
       networkImageURL = (prefs.getString('userimage') ?? '');
+      // networkImageURL=imgUrl;
       print("network imageUrl  $networkImageURL");
       // networkURL = networkImageURL;
     });
   }
-
+   @override
+   void initState() {
+     super.initState();
+     _loadImageURl();
+       // URL= URl();
+     // printUrl();
+     // imgUrl=printUrl();
+     // print('newUrl   $imgUrl');
+   }
   // Future<void> removeImageFromUrl(String url) async {
   //   try {
   //     url = networkURL;
@@ -160,10 +171,20 @@ class _UserImageState extends State<UserImage> {
     return Container(
       child: Stack(
         children: <Widget>[
+          // CircleAvatar(
+          //     radius: 70,
+          //    child:
+          //    CachedNetworkImage(
+          //       fit: BoxFit.cover,
+          //       imageUrl: imgUrl,
+          //       placeholder: (context, url) => const CircularProgressIndicator(),
+          //       errorWidget: (context, url, error) => const Icon(Icons.person,size: 60,),
+          //     )
+          // ),
           if (image != null) ...[
             CircleAvatar(
               backgroundColor: Colors.blueAccent,
-              backgroundImage: FileImage(File(image!.path)),
+              backgroundImage: FileImage(File(image?.path ?? '')),
               radius: 60,
             ),
           ] else ...[
@@ -173,6 +194,7 @@ class _UserImageState extends State<UserImage> {
               backgroundColor: Colors.teal,
             )
           ],
+
           Positioned(
             bottom: 20.0,
             right: 20.0,

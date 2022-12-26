@@ -24,23 +24,23 @@ class _PlaceListState extends State<PlaceList> {
   @override
   void initState() {
     super.initState();
-    placeService.getPlaceListData().then((val) {
-      setState(() {
-        if (val != null) {
-          _placeData = val;
-        }
-      });
-    });
+    // placeService.getPlaceListData().then((val) {
+    //   setState(() {
+    //     if (val != null) {
+    //       _placeData = val;
+    //     }
+    //   });
+    // });
   }
 
-  void _onItemChanged(String value) {
-    setState(() {
-      newPlaceList = _placeData.where((val) {
-        return val.name!.toLowerCase().contains(value.toLowerCase());
-      }).toList();
-      //  print("search  ${}")
-    });
-  }
+  // void _onItemChanged(String value) {
+  //   setState(() {
+  //     newPlaceList = _placeData.where((val) {
+  //       return val.name!.toLowerCase().contains(value.toLowerCase());
+  //     }).toList();
+  //     //  print("search  ${}")
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -201,28 +201,28 @@ class _PlaceListState extends State<PlaceList> {
           SizedBox(
             height: 13,
           ),
-          Center(
-            child: GestureDetector(
-              child: Container(
-                height: 100,
-                width: MediaQuery.of(context).size.width - 35,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      alignment: Alignment.centerRight,
-                      image: AssetImage("assets/images/mymen.jpg")),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Center(
-                    child: Text(
-                  'Mymensingh',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                )),
-              ),
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Mymensingh())),
-            ),
-          ),
+          // Center(
+          //   child: GestureDetector(
+          //     child: Container(
+          //       height: 100,
+          //       width: MediaQuery.of(context).size.width - 35,
+          //       decoration: const BoxDecoration(
+          //         image: DecorationImage(
+          //             fit: BoxFit.fill,
+          //             alignment: Alignment.centerRight,
+          //             image: AssetImage("assets/images/mymen.jpg")),
+          //         borderRadius: BorderRadius.all(Radius.circular(10)),
+          //       ),
+          //       child: Center(
+          //           child: Text(
+          //         'Mymensingh',
+          //         style: TextStyle(color: Colors.white, fontSize: 20),
+          //       )),
+          //     ),
+          //     onTap: () => Navigator.of(context)
+          //         .push(MaterialPageRoute(builder: (context) => Mymensingh())),
+          //   ),
+          // ),
         ],
       ),
     )

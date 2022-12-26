@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/add_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/pie_chart.dart';
+import 'package:trip_planner/Screens/Home/Trips/Expense/show_expense.dart';
 import 'package:trip_planner/Screens/Home/Trips/Expense/view_expense.dart';
 import 'package:trip_planner/constants.dart';
 
@@ -9,7 +10,8 @@ import 'Category/category_model.dart';
 class Expense extends StatefulWidget {
   Cat? category;
   final int tripid;
-   Expense( {Key? key,this.category, required this.tripid}) : super(key: key);
+  final String? name;
+   Expense( {Key? key,this.category, required this.tripid,  this.name}) : super(key: key);
 
   @override
   State<Expense> createState() => _ExpenseState();
@@ -19,7 +21,7 @@ class _ExpenseState extends State<Expense> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
@@ -39,6 +41,12 @@ class _ExpenseState extends State<Expense> {
                   child: Text('View Expense'),
                 ),
               ),
+              Tab(
+                child: Container(
+                  child: Text('View Summery'),
+                ),
+              ),
+
               // Tab(text: 'Add Expense',icon: Icon(Icons.add),),
               // Tab(text: 'View Expense',icon: Icon(Icons.view_headline_outlined),)
             ],
@@ -47,8 +55,9 @@ class _ExpenseState extends State<Expense> {
         body:  TabBarView(
           children: <Widget>[
           AddExpense(category: widget.category,tripid: widget.tripid),
-            // ViewExpense(tripid: tripId)
-             AllExpensePieChart(tripid: widget.tripid,),
+            ShowExpense(tripid: widget.tripid,name: widget.name ?? ''),
+             AllExpensePieChart(tripid: widget.tripid),
+
           ],
         ),
       ),

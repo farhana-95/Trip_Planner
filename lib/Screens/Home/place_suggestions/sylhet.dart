@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/sylhet_resorts.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/Restaurants/sylhet_restaurants.dart';
-
 import '../../../constants.dart';
 import '../Trips/add_trips.dart';
+import 'Restaurants/Mymensingh_restaurants.dart';
 
 class Sylhet extends StatefulWidget {
   const Sylhet({Key? key}) : super(key: key);
@@ -157,34 +157,31 @@ class _SylhetState extends State<Sylhet> {
                                         wordSpacing: 5,
                                         color: Color(0xFF595858)),
                                   ),
-                                  // Container(
-                                  //   margin: const EdgeInsets.only(top: 28),
-                                  //   child: const Text(
-                                  //     "Tourist Attractions",
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold),
-                                  //   ),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 5,
-                                  // ),
-                                  // const Divider(
-                                  //   height: 30,
-                                  //   indent: 160,
-                                  //   endIndent: 1,
-                                  //   thickness: 2,
-                                  //   color: Colors.green,
-                                  // ),
-                                  // Text(
-                                  //   "${documentSnapshot['attractions']}",
-                                  //   style: const TextStyle(
-                                  //       fontSize: 16,
-                                  //       height: 1.6,
-                                  //       wordSpacing: 5,
-                                  //       color: Color(0xFF595858)),
-                                  // ),
+
                                   const SizedBox(
                                     height: 10,
+                                  ),
+                                  Container(
+                                      margin:
+                                      const EdgeInsets.only(top: 15),
+                                      child: const Text(
+                                        "Tourist Time:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  const Divider(
+                                    height: 30,
+                                    indent: 1,
+                                    endIndent: 265,
+                                    thickness: 1.5,
+                                    color: Colors.blue,
+                                  ),
+                                  Text(
+                                    ' ${documentSnapshot['time']}',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        wordSpacing: 5,
+                                        color: Color(0xFF595858)),
                                   ),
                                   SizedBox(height: 10,),
                                   Row(
@@ -232,29 +229,7 @@ class _SylhetState extends State<Sylhet> {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                      margin:
-                                      const EdgeInsets.only(top: 15),
-                                      child: const Text(
-                                        "Tourist Time:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  const Divider(
-                                    height: 30,
-                                    indent: 1,
-                                    endIndent: 265,
-                                    thickness: 1.5,
-                                    color: Colors.blue,
-                                  ),
-                                  Text(
-                                    ' ${documentSnapshot['time']}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        wordSpacing: 5,
-                                        color: Color(0xFF595858)),
-                                  ),
-
+                                  SizedBox(height: 15,),
                                   Container(
                                     margin: const EdgeInsets.only(
                                         left: 216, right: 9, top: 10),

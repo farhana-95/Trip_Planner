@@ -246,6 +246,55 @@ class _MymensinghState extends State<Mymensingh> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 8,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFE8AB74),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Resorts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => mymensingh_resorts(id: documentSnapshot.id)));
+                                            print("RESORT ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                      SizedBox(width: 12,),
+                                      GestureDetector(
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFF64AF69),
+                                                  borderRadius: BorderRadius.all(Radius.circular(12))
+                                              ),
+
+                                              height: 80,
+                                              width: 160,
+
+                                              child: Center(child: Text('Add to Trip\n       +',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 17),))
+                                          ),
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => MymensinghRestaurants(id: documentSnapshot.id)));
+                                            print("REST ID = ${documentSnapshot.id}");
+                                          }
+
+
+                                        //Resort2(id: "$documentSnapshot"),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: 10,
                                   ),

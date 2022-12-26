@@ -9,7 +9,6 @@ import 'package:trip_planner/Screens/Home/Profile/Settings/setting.dart';
 import 'package:trip_planner/Screens/Home/Profile/Personal_Info/user_image.dart';
 import 'package:trip_planner/Screens/Home/Trips/trip_history.dart';
 import 'package:trip_planner/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -34,14 +33,13 @@ class _profileState extends State<profile> {
     return uid;
   }
 
-  late final CollectionReference _rating;
+
   TextEditingController comments = TextEditingController();
   late double count=0;
 
   @override
   void initState(){
     Id=getCurrentUser();
-    _rating= FirebaseFirestore.instance.collection("rating").doc(Id).collection("rating");
   }
 
   @override
@@ -49,13 +47,63 @@ class _profileState extends State<profile> {
     return Scaffold(
       body: ListView(
         children: [
-          const SizedBox(
-            height: 210,
+           Container(
+            height: 214,
             width: 100,
             child: Card(
               margin: EdgeInsets.all(10),
-              child: Center(
-                child: UserImage(),
+              child: Column(
+                children: [
+                  SizedBox(height: 8,),
+                  Center(
+                    child: UserImage(),
+                  ),
+                  SizedBox(height: 13,),
+                  Center(
+                    child: Container(
+                      child: StreamBuilder(
+                        stream: FirebaseAuth.instance.authStateChanges(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState != ConnectionState.active) {
+                            return const Center(
+                                child: CircularProgressIndicator()); // 👈 user is loading
+                          }
+                          final user = snapshot.data;
+                          final uid = user?.uid; // 👈 get the UID
+                          if (user != null) {
+                            print(user);
+                            CollectionReference users =
+                            FirebaseFirestore.instance.collection('users');
+
+                            return FutureBuilder<DocumentSnapshot>(
+                              future: users.doc(uid).get(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  return const Text("Something went wrong");
+                                }
+
+                                if (snapshot.hasData && !snapshot.data!.exists) {
+                                  return const Text("Document does not exist");
+                                }
+
+                                if (snapshot.connectionState == ConnectionState.done) {
+                                  Map<String, dynamic> data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                                  return Text("${data['name']}",style: TextStyle(fontSize: 17),);
+                                }
+
+                                return const Text("loading");
+                              },
+                            );
+                          } else {
+                            return const Text("user is not logged in");
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -242,6 +290,7 @@ class _profileState extends State<profile> {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.remove('email');
+                // prefs.remove(key)
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

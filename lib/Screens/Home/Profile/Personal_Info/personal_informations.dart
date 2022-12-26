@@ -43,6 +43,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
       ),
       body: ListView(children: <Widget>[
         //name
+        Padding(
+          padding: const EdgeInsets.only(top: 18,left: 24),
+          child: Text('Name: ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+        ),
         Container(
           height: 80,
           width: 100,
@@ -77,7 +81,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           snapshot.data!.data() as Map<String, dynamic>;
                       return Padding(
                         padding:  const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                        child: Text("Name:  ${data['name']}",style: TextStyle(fontSize: 17),),
+                        child: Text("${data['name']}",style: TextStyle(fontSize: 17),),
 
                       );
                     }
@@ -93,6 +97,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
         ),
         const Divider(height: 2,),
         //mail
+        Padding(
+          padding: const EdgeInsets.only(top: 18,left: 24),
+          child: Text('Mail: ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+        ),
         Container(
           height: 80,
           width: 100,
@@ -100,7 +108,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
                 child: Text(
-                  'Mail: ' + getCurrentUser(),
+                   getCurrentUser(),
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 17),
                 ),
@@ -109,6 +117,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
         ),
         const Divider(height: 2,),
         //phone
+        Padding(
+          padding: const EdgeInsets.only(top: 18,left: 24),
+          child: Text('Phone: ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+        ),
         Container(
           height: 80,
           width: 100,
@@ -143,7 +155,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       snapshot.data!.data() as Map<String, dynamic>;
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                        child: Text("Phone:  ${data['number']}",style: TextStyle(fontSize: 17),),
+                        child: Text("${data['number']}",style: TextStyle(fontSize: 17),),
                       );
                     }
 

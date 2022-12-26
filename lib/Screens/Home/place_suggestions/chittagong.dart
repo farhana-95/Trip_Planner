@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/Mynensingh.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/Resorts/chittagong_resorts.dart';
 import 'package:trip_planner/Screens/Home/place_suggestions/Restaurants/chittagong_restaurants.dart';
 
@@ -188,6 +187,29 @@ class _ChittagongState extends State<Chittagong> {
                                     height: 10,
                                   ),
                                   SizedBox(height: 10,),
+                                  Container(
+                                      margin:
+                                      const EdgeInsets.only(top: 15),
+                                      child: const Text(
+                                        "Tourist Time:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  const Divider(
+                                    height: 30,
+                                    indent: 1,
+                                    endIndent: 265,
+                                    thickness: 1.5,
+                                    color: Colors.blue,
+                                  ),
+                                  Text(
+                                    ' ${documentSnapshot['time']}',
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        wordSpacing: 5,
+                                        color: Color(0xFF595858)),
+                                  ),
+                                  SizedBox(height: 10,),
                                   Row(
                                     children: [
                                       SizedBox(width: 8,),
@@ -236,29 +258,7 @@ class _ChittagongState extends State<Chittagong> {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                      margin:
-                                      const EdgeInsets.only(top: 15),
-                                      child: const Text(
-                                        "Tourist Time:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  const Divider(
-                                    height: 30,
-                                    indent: 1,
-                                    endIndent: 265,
-                                    thickness: 1.5,
-                                    color: Colors.blue,
-                                  ),
-                                  Text(
-                                    ' ${documentSnapshot['time']}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        wordSpacing: 5,
-                                        color: Color(0xFF595858)),
-                                  ),
-
+                                  SizedBox(height: 15,),
                                   Container(
                                     margin: const EdgeInsets.only(
                                         left: 216, right: 9, top: 10),
