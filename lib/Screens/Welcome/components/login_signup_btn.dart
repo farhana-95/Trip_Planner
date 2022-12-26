@@ -50,7 +50,7 @@ class _LoginAndSignupBtnState extends State<LoginAndSignupBtn> {
               primary: kPrimaryColor, elevation: 0),
           child: Text(
             "Sign Up".toUpperCase(),
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ],

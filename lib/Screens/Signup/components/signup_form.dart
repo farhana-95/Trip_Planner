@@ -87,8 +87,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 if (value == null || value.trim().isEmpty) {
                   return 'This field is required';
                 }
-                if (value.trim().length < 8) {
-                  return 'Password must be at least 8 characters in length';
+                if (value.trim().length < 3) {
+                  return 'Password must be at least 3 characters in length';
                 }
                 // Return null if the entered password is valid
                 return null;
@@ -121,7 +121,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     });
               }
             },
-            child: Text("Sign Up".toUpperCase()),
+            child: Text("Sign Up".toUpperCase(),style: TextStyle(color: Colors.white),),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(

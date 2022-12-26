@@ -176,26 +176,35 @@ late String  Id;
                   ),
                   onPressed: ()async{
 
-                        Map<String,dynamic> data={
-                      "tripid": Timestamp.now().millisecondsSinceEpoch,
-                      "tripname": _tripname.text,
-                      "location": _location.text,
-                      "startdate":_startdate.text,
-                      "enddate": _enddate.text,
-                          "image": img.text,
-                       };
-                    _trip.add(data);
-                        _tripname.text='';
-                        _location.text='';
-                        _startdate.text='';
-                        _enddate.text='';
-                        img.text='';
+                        if(_tripname.text != '' && _location.text != ''
+                            && _startdate.text != '' && _enddate.text != '')
+                          {
+                            Map<String,dynamic> data={
+                              "tripid": Timestamp.now().millisecondsSinceEpoch,
+                              "tripname": _tripname.text,
+                              "location": _location.text,
+                              "startdate":_startdate.text,
+                              "enddate": _enddate.text,
+                              "image": img.text,
+                            };
+                            _trip.add(data);
+                            _tripname.text='';
+                            _location.text='';
+                            _startdate.text='';
+                            _enddate.text='';
+                            img.text='';
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) => MainScreen()));
 
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) => MainScreen()));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
+                          }
+                        else{
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(content: Text("Fill all the informations")));
+                        }
 
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(content: Text("New Trip Saved!")));
+
 
                           // print("IDD $Id");
                   }
