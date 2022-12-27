@@ -22,7 +22,7 @@ class SetAlarm {
 
   static void _oneShotAtTaskCallback() {
     print("One Shot At Task Running");
-    notificationService.showNotifications('', '');
+    notificationService.showNotifications();
   }
    void cancelAlarm(){
     AndroidAlarmManager.cancel(_oneShotAtTaskId);

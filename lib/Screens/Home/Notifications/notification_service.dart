@@ -45,11 +45,11 @@ class NotificationService {
     importance: Importance.high,
   );
 
-  Future<void> showNotifications(String? name , String? date) async {
+  Future<void> showNotifications() async {
     await flutterLocalNotificationsPlugin.show(
       0,
       "Are You Ready?",
-      "You have upcoming trip '${name}' in '${date}'",
+      "You have an upcoming trip ",
       NotificationDetails(android: _androidNotificationDetails),
     );
   }

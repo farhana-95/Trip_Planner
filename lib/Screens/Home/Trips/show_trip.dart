@@ -187,8 +187,8 @@ class _TripState extends State<Trip> {
                           _enddate.text,
                           true);
                       // AndroidAlarmManager.periodic(const Duration(minutes: 1), 1, printHello);
-                      // alarm.scheduleOneShotAlarm(_startdate.text, true);
-                      notificationService.showNotifications(_tripname.text ?? '', _startdate.text ?? '');
+                      alarm.scheduleOneShotAlarm(_startdate.text, true);
+                      // notificationService.showNotifications(_tripname.text ?? '', _startdate.text ?? '');
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Reminder Saved!")));
                       Navigator.of(context).pop();
